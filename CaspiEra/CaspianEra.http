@@ -1,0 +1,6 @@
+@CaspianEra_HostAddress = http://localhost:5293
+
+GET {{CaspianEra_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

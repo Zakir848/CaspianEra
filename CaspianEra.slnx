@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/backend/">
+    <Project Path="CaspiEra.Application/CaspianEra.Application.csproj" Id="918bf2a6-faf7-44fb-89f9-9962a4b7aa57" />
+    <Project Path="CaspiEra.Domain/CaspianEra.Domain.csproj" Id="c1859a2a-2b21-40fd-a867-9541b2fea1d4" />
+    <Project Path="CaspiEra.Infratructure/CaspianEra.Infratructure.csproj" Id="a37e213b-6419-4690-84d1-be6711f78d7c" />
+    <Project Path="CaspiEra/CaspianEra.API.csproj" Id="271665d1-8200-45bd-a581-bc84912fda5b" />
+  </Folder>
+  <Folder Name="/fronend/" />
+</Solution>
