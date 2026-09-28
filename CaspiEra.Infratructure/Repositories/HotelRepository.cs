@@ -23,19 +23,16 @@ namespace CaspiEra.Infratructure.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<Hotel?> GetByIdAsync(int no, CancellationToken cancellationToken)
+        public async Task<Hotel?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            
-
             return await _context.Hotels
                 .AsNoTracking()
                 .Include(x => x.Owner)
-                .Include(x => x.City)
                 .Include(x => x.Rooms)
                 .Include(x => x.RoomTypes)
                 .Include(x => x.HotelImages)
                 .Include(x => x.HotelReviews)
-                .FirstOrDefaultAsync(n => n.No == no,cancellationToken);
+                .FirstOrDefaultAsync(i => i.Id == id,cancellationToken);
         }
 
         public async Task<Hotel> CreatAsync(Hotel hotel, CancellationToken cancellationToken)

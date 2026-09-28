@@ -11,7 +11,7 @@ namespace CaspianEra.Application.DTOs.Cities
     public class CreateCityDto
     {
         public string? Name { get; set; }
-        public string? Description { get; set; }
+        public string? Description { get; set; } = string.Empty;
         public IFormFile? Image { get; set; }
     }
 }

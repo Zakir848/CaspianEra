@@ -8,5 +8,6 @@ namespace CaspianEra.API.Controllers
     [Authorize(Roles = "AppAdmin,HotelOwner")]
     public class HotelOwnerController : ControllerBase
     {
+
     }
 }

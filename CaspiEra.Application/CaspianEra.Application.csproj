@@ -9,8 +9,6 @@
   <ItemGroup>
     <Folder Include="DTOs\Refund\" />
     <Folder Include="DTOs\Payments\" />
-    <Folder Include="Features\Hotels\Query\GetHotels\" />
-    <Folder Include="Features\Hotels\Query\GetHotelById\" />
     <Folder Include="Features\Payments\Command\" />
     <Folder Include="Features\Payments\Query\" />
     <Folder Include="Features\Refound\Command\" />
@@ -21,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.2.0" />
     <PackageReference Include="MediatR" Version="14.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.3.10" />
   </ItemGroup>

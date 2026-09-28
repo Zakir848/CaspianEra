@@ -1,10 +1,17 @@
 using CaspianEra.API.Helper;
 using CaspianEra.Application.Auth.Interface;
+using CaspianEra.Application.Features.Hotels.Command.CreateHotel;
+using CaspianEra.Application.Interfaces.Repositories;
+using CaspianEra.Application.Mappings;
 using CaspianEra.Domain.Entities.Users;
 using CaspianEra.Infratructure.Authorization;
+using CaspianEra.Infratructure.Files;
 using CaspianEra.Infratructure.Persistance;
-using CaspiEra.Domain.Entities.Hotels;
+using CaspianEra.Infratructure.Repositories;
+using CaspianEra.Infratructure.Settings;
+using CaspiEra.Infratructure.Repositories;
 using CloudinaryDotNet;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +30,7 @@ builder.Services.AddControllers()
              .Converters
              .Add(new JsonStringEnumConverter());
      });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -34,30 +41,40 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     );
 });
 
-//builder.Services.AddScoped<Hotel>();
+builder.Services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssembly(
+                typeof(CreateHotelCommand).Assembly));
+
+builder.Services.AddAutoMapper(
+    typeof(HotelMappingProfile).Assembly);
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthHelper, AuthHelper>();
-//builder.Services.AddScoped<IFileStorageService, CloudinaryFileStorageService>();
+builder.Services.AddScoped<IHotelRepository, HotelRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+
+builder.Services.AddScoped<IFileStorageService, CloudinaryStorageService>();
+
 //builder.Services.AddScoped<INotificationService, NotificationService>();
 
-//builder.Services.Configure<CloudinarySetting>(
-//    builder.Configuration.GetSection("CloudinarySettings")
-//);
+builder.Services.Configure<CloudinarySetting>(
+    builder.Configuration.GetSection("CloudinarySettings")
+);
 
-//builder.Services.AddSingleton<Cloudinary>(sp =>
-//{
-//    var settings = builder.Configuration
-//        .GetSection("CloudinarySettings")
-//        .Get<CloudinarySetting>();
+builder.Services.AddSingleton<Cloudinary>(sp =>
+{
+    var settings = builder.Configuration
+        .GetSection("CloudinarySettings")
+        .Get<CloudinarySetting>();
 
-//    var account = new Account(
-//        settings!.CloudName,
-//        settings.ApiKey,
-//        settings.ApiSecret
-//    );
+    var account = new Account(
+        settings!.CloudName,
+        settings.ApiKey,
+        settings.ApiSecret
+    );
 
-//    return new Cloudinary(account);
-//});
+    return new Cloudinary(account);
+});
 
 builder.Services
     .AddIdentityCore<AppUser>(options =>
@@ -183,6 +200,40 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    // Get the RoleManager service from dependency injection.
+    var roleManager = scope.ServiceProvider
+        .GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+    // Define the application roles.
+    string[] roles =
+    {
+        "SuperAdmin",
+        "HotelOwner",
+        "Manager",
+        "User"
+    };
+
+    // Check whether each role already exists.
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            // Create the role if it does not exist.
+            var result = await roleManager.CreateAsync(
+                new IdentityRole<Guid>(role));
+
+            // Stop application startup if role creation fails.
+            if (!result.Succeeded)
+            {
+                throw new InvalidOperationException(
+                    $"Failed to create role: {role}");
+            }
+        }
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -192,6 +243,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
