@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CaspianEra.Infratructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260928204934_updateTypeField")]
-    partial class updateTypeField
+    [Migration("20260929191838_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,11 +47,15 @@ namespace CaspianEra.Infratructure.Migrations
 
             modelBuilder.Entity("CaspiEra.Domain.Entities.Amenities.RoomAmenity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -59,6 +63,9 @@ namespace CaspianEra.Infratructure.Migrations
 
                     b.Property<Guid?>("RoomId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -188,10 +195,7 @@ namespace CaspianEra.Infratructure.Migrations
                     b.Property<DateTime?>("ArchivedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("CityId1")
+                    b.Property<Guid>("CityId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -213,7 +217,8 @@ namespace CaspianEra.Infratructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("No")
                         .HasColumnType("nvarchar(max)");
@@ -236,7 +241,7 @@ namespace CaspianEra.Infratructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId1");
+                    b.HasIndex("CityId");
 
                     b.HasIndex("OwnerId");
 
@@ -1069,8 +1074,8 @@ namespace CaspianEra.Infratructure.Migrations
                 {
                     b.HasOne("CaspiEra.Domain.Entities.Locations.City", "City")
                         .WithMany("Hotels")
-                        .HasForeignKey("CityId1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CaspiEra.Domain.Entities.ApplicationUsers.ApplicationUser", "Owner")
@@ -1236,7 +1241,7 @@ namespace CaspianEra.Infratructure.Migrations
                         .IsRequired();
 
                     b.HasOne("CaspiEra.Domain.Entities.Rooms.RoomType", "RoomType")
-                        .WithMany("RoomTypes")
+                        .WithMany("Rooms")
                         .HasForeignKey("RoomTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1384,7 +1389,7 @@ namespace CaspianEra.Infratructure.Migrations
 
             modelBuilder.Entity("CaspiEra.Domain.Entities.Rooms.RoomType", b =>
                 {
-                    b.Navigation("RoomTypes");
+                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("CaspianEra.Domain.Entities.Users.AppUser", b =>

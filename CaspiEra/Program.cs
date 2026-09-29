@@ -23,13 +23,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers()
-     .AddJsonOptions(options =>
-     {
-         options.JsonSerializerOptions
-             .Converters
-             .Add(new JsonStringEnumConverter());
-     });
+  builder.Services.AddControllers()
+             .AddJsonOptions(options =>
+             {
+                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+             });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -45,13 +43,17 @@ builder.Services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(
                 typeof(CreateHotelCommand).Assembly));
 
-builder.Services.AddAutoMapper(
-    typeof(HotelMappingProfile).Assembly);
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.LicenseKey = builder.Configuration["AutoMapper:LicenseKey"]!;
+}, typeof(HotelMappingProfile).Assembly);
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthHelper, AuthHelper>();
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IRoomTypeRepository, RoomTypeRepository>();
 
 builder.Services.AddScoped<IFileStorageService, CloudinaryStorageService>();
 
@@ -209,7 +211,7 @@ using (var scope = app.Services.CreateScope())
     // Define the application roles.
     string[] roles =
     {
-        "SuperAdmin",
+        "AppAdmin",
         "HotelOwner",
         "Manager",
         "User"

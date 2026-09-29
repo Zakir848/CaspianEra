@@ -12,6 +12,6 @@ public class RoomType : BaseEntity
     public string Name { get; set; } = string.Empty;
     public int Capacity { get; set; }
     public decimal BasePrice { get; set; }
-    public ICollection<Room> RoomTypes { get; set; } 
+    public ICollection<Room> Rooms { get; set; } 
         = new List<Room>();
 }

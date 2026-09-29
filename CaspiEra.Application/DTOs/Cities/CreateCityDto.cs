@@ -12,6 +12,6 @@ namespace CaspianEra.Application.DTOs.Cities
     {
         public string? Name { get; set; }
         public string? Description { get; set; } = string.Empty;
-        public IFormFile? Image { get; set; }
+        public List<IFormFile> Image { get; set; } = new();
     }
 }

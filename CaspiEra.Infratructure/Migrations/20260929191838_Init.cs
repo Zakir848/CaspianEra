@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CaspianEra.Infratructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Ini : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -234,17 +234,17 @@ namespace CaspianEra.Infratructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    No = table.Column<int>(type: "int", nullable: false),
+                    No = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FloorCount = table.Column<int>(type: "int", nullable: false),
                     StarCount = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    CityId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ArchivedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -260,11 +260,11 @@ namespace CaspianEra.Infratructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Hotels_Cities_CityId1",
-                        column: x => x.CityId1,
+                        name: "FK_Hotels_Cities_CityId",
+                        column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -322,7 +322,7 @@ namespace CaspianEra.Infratructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HotelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -398,6 +398,42 @@ namespace CaspianEra.Infratructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReservationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    PaymentStatus = table.Column<int>(type: "int", nullable: false),
+                    Method = table.Column<int>(type: "int", nullable: false),
+                    TransactionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaymentProvider = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaidAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RefundedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RefundedAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    FailureReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_Reservations_ReservationId",
+                        column: x => x.ReservationId,
+                        principalTable: "Reservations",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Payments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
@@ -462,7 +498,41 @@ namespace CaspianEra.Infratructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LongStayDiscount",
+                name: "Refunds",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProviderRefundId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FailureReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Refunds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Refunds_Payments_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "Payments",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Refunds_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LongStayDiscounts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -476,9 +546,9 @@ namespace CaspianEra.Infratructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LongStayDiscount", x => x.Id);
+                    table.PrimaryKey("PK_LongStayDiscounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LongStayDiscount_Rooms_RoomId",
+                        name: "FK_LongStayDiscounts_Rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Rooms",
                         principalColumn: "Id",
@@ -517,10 +587,12 @@ namespace CaspianEra.Infratructure.Migrations
                 name: "RoomAmenities",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    RoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -533,7 +605,7 @@ namespace CaspianEra.Infratructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoomHourlyPackage",
+                name: "RoomHourlyPackages",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -546,9 +618,9 @@ namespace CaspianEra.Infratructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoomHourlyPackage", x => x.Id);
+                    table.PrimaryKey("PK_RoomHourlyPackages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoomHourlyPackage_Rooms_RoomId",
+                        name: "FK_RoomHourlyPackages_Rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Rooms",
                         principalColumn: "Id",
@@ -579,7 +651,7 @@ namespace CaspianEra.Infratructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoomReview",
+                name: "RoomReviews",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -594,19 +666,19 @@ namespace CaspianEra.Infratructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoomReview", x => x.Id);
+                    table.PrimaryKey("PK_RoomReviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoomReview_AspNetUsers_UserId",
+                        name: "FK_RoomReviews_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RoomReview_Reservations_ReservationId",
+                        name: "FK_RoomReviews_Reservations_ReservationId",
                         column: x => x.ReservationId,
                         principalTable: "Reservations",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RoomReview_Rooms_RoomId",
+                        name: "FK_RoomReviews_Rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Rooms",
                         principalColumn: "Id");
@@ -667,9 +739,9 @@ namespace CaspianEra.Infratructure.Migrations
                 column: "HotelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hotels_CityId1",
+                name: "IX_Hotels_CityId",
                 table: "Hotels",
-                column: "CityId1");
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Hotels_OwnerId",
@@ -677,9 +749,19 @@ namespace CaspianEra.Infratructure.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LongStayDiscount_RoomId",
-                table: "LongStayDiscount",
+                name: "IX_LongStayDiscounts_RoomId",
+                table: "LongStayDiscounts",
                 column: "RoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_ReservationId",
+                table: "Payments",
+                column: "ReservationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_UserId",
+                table: "Payments",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_AppUserId",
@@ -689,6 +771,16 @@ namespace CaspianEra.Infratructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_UserId",
                 table: "RefreshTokens",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Refunds_PaymentId",
+                table: "Refunds",
+                column: "PaymentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Refunds_UserId",
+                table: "Refunds",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -732,8 +824,8 @@ namespace CaspianEra.Infratructure.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoomHourlyPackage_RoomId",
-                table: "RoomHourlyPackage",
+                name: "IX_RoomHourlyPackages_RoomId",
+                table: "RoomHourlyPackages",
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
@@ -742,18 +834,18 @@ namespace CaspianEra.Infratructure.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoomReview_ReservationId",
-                table: "RoomReview",
+                name: "IX_RoomReviews_ReservationId",
+                table: "RoomReviews",
                 column: "ReservationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoomReview_RoomId",
-                table: "RoomReview",
+                name: "IX_RoomReviews_RoomId",
+                table: "RoomReviews",
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoomReview_UserId",
-                table: "RoomReview",
+                name: "IX_RoomReviews_UserId",
+                table: "RoomReviews",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -812,10 +904,13 @@ namespace CaspianEra.Infratructure.Migrations
                 name: "HotelImages");
 
             migrationBuilder.DropTable(
-                name: "LongStayDiscount");
+                name: "LongStayDiscounts");
 
             migrationBuilder.DropTable(
                 name: "RefreshTokens");
+
+            migrationBuilder.DropTable(
+                name: "Refunds");
 
             migrationBuilder.DropTable(
                 name: "ReservationItems");
@@ -827,25 +922,28 @@ namespace CaspianEra.Infratructure.Migrations
                 name: "RoomAmenities");
 
             migrationBuilder.DropTable(
-                name: "RoomHourlyPackage");
+                name: "RoomHourlyPackages");
 
             migrationBuilder.DropTable(
                 name: "RoomImages");
 
             migrationBuilder.DropTable(
-                name: "RoomReview");
+                name: "RoomReviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "Rooms");
 
             migrationBuilder.DropTable(
                 name: "Reservations");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "RoomTypes");

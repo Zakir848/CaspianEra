@@ -24,6 +24,7 @@ public class CityRepository : ICityRepository
         return await _context.Cities
             .AsNoTracking()
             .Include(x => x.Hotels)
+            .Include(x=>x.CityImages)
             .ToListAsync(cancellationToken);
     }
 

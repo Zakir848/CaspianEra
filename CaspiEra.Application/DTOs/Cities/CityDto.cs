@@ -2,11 +2,11 @@
 
 namespace CaspianEra.Application.DTOs.Cities;
 
-public class CityResponseDto
+public class CityDto
 {
     public Guid CityId { get; set; }
     public string CityName { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public IFormFile? Image { get; set; }
+    public List<IFormFile> Image { get; set; } = new();
 }
 

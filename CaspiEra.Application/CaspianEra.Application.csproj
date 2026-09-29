@@ -13,8 +13,6 @@
     <Folder Include="Features\Payments\Query\" />
     <Folder Include="Features\Refound\Command\" />
     <Folder Include="Features\Refound\Query\" />
-    <Folder Include="Features\Rooms\Command\" />
-    <Folder Include="Features\Rooms\Query\" />
     <Folder Include="Interfaces\Services\" />
   </ItemGroup>
 

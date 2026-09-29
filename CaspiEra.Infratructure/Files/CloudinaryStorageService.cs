@@ -67,7 +67,7 @@ public class CloudinaryStorageService : IFileStorageService
         var uploadParams = new ImageUploadParams
         {
             File = new FileDescription(file.FileName, stream),
-            Folder = "socialmedia/images"
+            Folder = "CaspianEra/images"
         };
 
         var result = await _cloudinary.UploadAsync(uploadParams, cancellationToken);
@@ -96,7 +96,7 @@ public class CloudinaryStorageService : IFileStorageService
                 stream
             ),
 
-            Folder = "socialmedia/videos"
+            Folder = "CaspianEra/videos"
         };
 
         var result = await _cloudinary.UploadAsync(

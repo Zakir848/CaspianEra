@@ -17,12 +17,12 @@ namespace CaspianEra.API.Controllers
     [ApiController]
     public class CitiesController : ControllerBase
     {
-        private readonly IMediator _mediator;       
+        private readonly IMediator _mediator;
 
         public CitiesController(IMediator mediator)
         {
             _mediator = mediator;
-        } 
+        }
 
         [HttpGet]
         public async Task<ActionResult> GetAll(CancellationToken cancellationToken)
@@ -33,11 +33,11 @@ namespace CaspianEra.API.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult> GetById(Guid id,CancellationToken cancellationToken)
+        public async Task<ActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
             var city = await _mediator.Send(new GetCityByIdQuery(id), cancellationToken);
 
-            if(city is null)
+            if (city is null)
             {
                 return NotFound("Not found City");
             }
@@ -47,8 +47,8 @@ namespace CaspianEra.API.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        [Authorize(Roles ="AppAdmin")]
-        public async Task<IActionResult> Create([FromForm]CreateCityDto dto, CancellationToken cancellationToken)
+        //[Authorize(Roles ="AppAdmin")]
+        public async Task<IActionResult> Create([FromForm] CreateCityDto dto, CancellationToken cancellationToken)
         {
             var city = await _mediator.Send(new CreateCityCommand(dto), cancellationToken);
 
@@ -56,7 +56,8 @@ namespace CaspianEra.API.Controllers
                 nameof(GetById),
                 new
                 {
-                    id = city.CityId
+                    name = city.CityName,
+                    image = dto.Image,
                 },
                 city
             );

@@ -7,20 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CaspianEra.Application.Features.Cities.Query.GetAllCities
+namespace CaspianEra.Application.Features.Cities.Query.GetAllCities;
+
+public class GetCitiesHandle : IRequestHandler<GetCitiesQuery, List<City>>
 {
-    public class GetCitiesHandle : IRequestHandler<GetCitiesQuery, List<City>>
+    private readonly ICityRepository _repository;
+
+    public GetCitiesHandle(ICityRepository repository)
     {
-        private readonly ICityRepository _repository;
+        _repository = repository;
+    }
 
-        public GetCitiesHandle(ICityRepository repository)
-        {
-            _repository = repository;
-        }
-
-        public async Task<List<City>> Handle(GetCitiesQuery request, CancellationToken cancellationToken)
-        {
-            return await _repository.GetAllCityAsync(cancellationToken);
-        }
+    public async Task<List<City>> Handle(GetCitiesQuery request, CancellationToken cancellationToken)
+    {
+        return await _repository.GetAllCityAsync(cancellationToken);
     }
 }

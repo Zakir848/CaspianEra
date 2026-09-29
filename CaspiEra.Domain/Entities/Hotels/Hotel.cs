@@ -23,7 +23,7 @@ public class Hotel : BaseEntity
     public Guid OwnerId { get; set; }
     public ApplicationUser Owner { get; set; } = null!;
 
-    public int CityId { get; set; }
+    public Guid CityId { get; set; }
     public City City { get; set; } = null!;
 
     public DateTime? ArchivedAt { get; set; }

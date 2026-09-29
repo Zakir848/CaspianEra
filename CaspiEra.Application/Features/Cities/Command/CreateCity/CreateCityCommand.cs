@@ -8,4 +8,4 @@ using System.Threading.Tasks;
 
 namespace CaspianEra.Application.Features.Cities.Command.CreateCity;
 
-public record CreateCityCommand(CreateCityDto dto) : IRequest<CityResponseDto>;
+public record CreateCityCommand(CreateCityDto dto) : IRequest<CityDto>;
