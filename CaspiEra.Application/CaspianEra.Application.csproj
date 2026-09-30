@@ -9,11 +9,11 @@
   <ItemGroup>
     <Folder Include="DTOs\Refund\" />
     <Folder Include="DTOs\Payments\" />
+    <Folder Include="Features\Owners\Query\" />
     <Folder Include="Features\Payments\Command\" />
     <Folder Include="Features\Payments\Query\" />
     <Folder Include="Features\Refound\Command\" />
     <Folder Include="Features\Refound\Query\" />
-    <Folder Include="Interfaces\Services\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,5 @@
-﻿using CaspiEra.Domain.Common;
-using CaspiEra.Domain.Entities.ApplicationUsers;
+﻿using CaspianEra.Domain.Entities.Users;
+using CaspiEra.Domain.Common;
 using CaspiEra.Domain.Entities.Reservations;
 using CaspiEra.Domain.Entities.Rooms;
 
@@ -11,7 +11,7 @@ public class RoomReview : BaseEntity
     public Room Room { get; set; } = null!;
 
     public Guid UserId { get; set; }
-    public ApplicationUser User { get; set; } = null!;
+    public AppUser User { get; set; } = null!;
 
     public int Rating { get; set; }
     public string Comment { get; set; } = string.Empty;

@@ -1,4 +1,6 @@
-﻿using CaspiEra.Domain.Entities.Token;
+﻿using CaspiEra.Domain.Entities.Hotels;
+using CaspiEra.Domain.Entities.Reservations;
+using CaspiEra.Domain.Entities.Token;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
@@ -20,6 +22,12 @@ public class AppUser : IdentityUser<Guid>
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
+
+    public ICollection<Hotel> OwnerHotel { get; set; }
+    = new List<Hotel>();
+    public ICollection<Reservation> Reservations { get; set; }
+        = new List<Reservation>();
+
     public ICollection<RefreshToken> RefreshTokens { get; set; }
     = new List<RefreshToken>();
 }

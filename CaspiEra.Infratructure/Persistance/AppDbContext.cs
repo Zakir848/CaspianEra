@@ -1,6 +1,6 @@
-﻿using CaspiEra.Domain.Entities;
+﻿using CaspianEra.Domain.Entities.Users;
+using CaspiEra.Domain.Entities;
 using CaspiEra.Domain.Entities.Amenities;
-using CaspiEra.Domain.Entities.ApplicationUsers;
 using CaspiEra.Domain.Entities.Hotels;
 using CaspiEra.Domain.Entities.Images;
 using CaspiEra.Domain.Entities.Locations;
@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CaspianEra.Infratructure.Persistance;
 
-public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+public class AppDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
@@ -40,10 +40,8 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid
     public DbSet<Reservation> Reservations => Set<Reservation>();
     public DbSet<ReservationItem> ReservationItems => Set<ReservationItem>();
 
-
     public DbSet<Payment> Payments => Set<Payment>();
     public DbSet<Refund> Refunds => Set<Refund>();
-
 
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 

@@ -6,7 +6,7 @@ namespace CaspianEra.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "AppAdmin,HotelOwner, Manager")]
-    public class HotelManagerController : ControllerBase
+    public class ManagersController : ControllerBase
     {
     }
 }

@@ -2,12 +2,14 @@ using CaspianEra.API.Helper;
 using CaspianEra.Application.Auth.Interface;
 using CaspianEra.Application.Features.Hotels.Command.CreateHotel;
 using CaspianEra.Application.Interfaces.Repositories;
+using CaspianEra.Application.Interfaces.Services;
 using CaspianEra.Application.Mappings;
 using CaspianEra.Domain.Entities.Users;
 using CaspianEra.Infratructure.Authorization;
 using CaspianEra.Infratructure.Files;
 using CaspianEra.Infratructure.Persistance;
 using CaspianEra.Infratructure.Repositories;
+using CaspianEra.Infratructure.Services;
 using CaspianEra.Infratructure.Settings;
 using CaspiEra.Infratructure.Repositories;
 using CloudinaryDotNet;
@@ -50,6 +52,7 @@ builder.Services.AddAutoMapper(cfg =>
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthHelper, AuthHelper>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();

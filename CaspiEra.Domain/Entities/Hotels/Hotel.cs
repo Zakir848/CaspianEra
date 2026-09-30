@@ -1,5 +1,5 @@
-﻿using CaspiEra.Domain.Common;
-using CaspiEra.Domain.Entities.ApplicationUsers;
+﻿using CaspianEra.Domain.Entities.Users;
+using CaspiEra.Domain.Common;
 using CaspiEra.Domain.Entities.Images;
 using CaspiEra.Domain.Entities.Locations;
 using CaspiEra.Domain.Entities.Rooms;
@@ -21,7 +21,7 @@ public class Hotel : BaseEntity
     public string Email { get; set; } = string.Empty;
 
     public Guid OwnerId { get; set; }
-    public ApplicationUser Owner { get; set; } = null!;
+    public AppUser Owner { get; set; } = null!;
 
     public Guid CityId { get; set; }
     public City City { get; set; } = null!;

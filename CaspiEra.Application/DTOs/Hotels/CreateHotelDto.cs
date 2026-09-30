@@ -20,5 +20,6 @@ public class CreateHotelDto
     public int? StarCount { get; set; }
 
     public Guid CityId { get; set; }
+    public Guid OwnerId { get; set; }
     public List<IFormFile> Images { get; set; } = new();
 }

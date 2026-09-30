@@ -1,10 +1,5 @@
-﻿using CaspiEra.Domain.Common;
-using CaspiEra.Domain.Entities.ApplicationUsers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CaspianEra.Domain.Entities.Users;
+using CaspiEra.Domain.Common;
 
 namespace CaspiEra.Domain.Entities.Token;
 
@@ -20,6 +15,6 @@ public class RefreshToken : BaseEntity
 
     public Guid UserId { get; set; }
 
-    public ApplicationUser User { get; set; } = null!;
+    public AppUser User { get; set; } = null!;
 }
 
