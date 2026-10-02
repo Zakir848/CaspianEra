@@ -1,11 +1,8 @@
-﻿using CaspiEra.Domain.Entities.Hotels;
+﻿using CaspianEra.Application.DTOs.Hotels;
+using CaspianEra.Application.Models;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CaspianEra.Application.Features.Hotels.Query.GetHotels;
 
-public record GetHotelsQuery : IRequest<List<Hotel>>;
+public record GetHotelsQuery(int page = 1 ,int pageSize = 10) : IRequest<PagedResult<HotelDto>>;

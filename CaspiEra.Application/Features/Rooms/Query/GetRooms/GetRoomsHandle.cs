@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CaspianEra.Application.Interfaces.Repositories;
+using CaspianEra.Application.Models;
 using CaspiEra.Domain.Entities.Rooms;
 using MediatR;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CaspianEra.Application.Features.Rooms.Query.GetRooms;
 
-public class GetRoomsHandle : IRequestHandler<GetRoomsQuery,List<Room>>
+public class GetRoomsHandle : IRequestHandler<GetRoomsQuery,PagedResult<Room>>
 {
     private readonly IRoomRepository _repository;
 
@@ -19,9 +20,9 @@ public class GetRoomsHandle : IRequestHandler<GetRoomsQuery,List<Room>>
         _repository = repository;
     }
 
-    public async Task<List<Room>> Handle(GetRoomsQuery request, CancellationToken cancellationToken)
+    public async Task<PagedResult<Room>> Handle(GetRoomsQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.GetRoomsAsync(request.hotelId, cancellationToken);
+        return await _repository.GetRoomsAsync(request.page, request.pageSize, request.hotelId, cancellationToken);
     }
 }
 

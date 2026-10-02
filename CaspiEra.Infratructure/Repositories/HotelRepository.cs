@@ -14,19 +14,22 @@ namespace CaspiEra.Infratructure.Repositories
             _context = context;
         }
 
-        public async Task<List<Hotel>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<List<Hotel>> GetAllAsync(int page, int pageSize, CancellationToken cancellationToken)
         {
             return await _context.Hotels
                 .AsNoTracking()
                 .Include(x => x.City)
                 .Include(x => x.HotelImages)
+                .OrderBy(x=> x.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync(cancellationToken);
         }
 
         public async Task<Hotel?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return await _context.Hotels
-                .AsNoTracking()
+                .AsNoTracking()                
                 .Include(x => x.Owner)
                 .Include(x => x.Rooms)
                 .Include(x => x.RoomTypes)
@@ -35,7 +38,7 @@ namespace CaspiEra.Infratructure.Repositories
                 .FirstOrDefaultAsync(i => i.Id == id,cancellationToken);
         }
 
-        public async Task<Hotel> CreatAsync(Hotel hotel, CancellationToken cancellationToken)
+        public async Task<Hotel> CreateAsync(Hotel hotel, CancellationToken cancellationToken)
         {
             await _context.Hotels.AddAsync(hotel, cancellationToken);
 
@@ -55,6 +58,11 @@ namespace CaspiEra.Infratructure.Repositories
         public async Task SaveChangesAsync(CancellationToken cancellationToken)
         {
             await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public Task<int> GetCountAsync(CancellationToken cancellationToken)
+        {
+            return _context.Hotels.CountAsync(cancellationToken);
         }
     }
 }
