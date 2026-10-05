@@ -20,7 +20,7 @@ public class CityRepository : ICityRepository
         _context = context;
     }
 
-    public async Task<PagedResult<City>> GetAllAsync(int page, int pageSize, CancellationToken cancellationToken)
+    public async Task<List<City>> GetAllAsync(int page, int pageSize, CancellationToken cancellationToken)
     {
         var query = _context.Cities.AsNoTracking();
 
@@ -29,20 +29,13 @@ public class CityRepository : ICityRepository
         var cities = await _context.Cities
             .AsNoTracking()
             .Include(x => x.Hotels)
-            .Include(x=>x.CityImages)
+            .Include(x => x.CityImages)
             .OrderBy(x => x.Name)
             .Skip((page - 1) * pageSize)
-            .Take(pageSize) 
+            .Take(pageSize)
             .ToListAsync(cancellationToken);
 
-        return new PagedResult<City>
-        {
-            Items = cities,
-            Page = page,
-            PageSize = pageSize,
-            TotalCount = totalCount,
-            TotalPages = (int)Math.Ceiling((double)totalCount / pageSize)
-        };
+        return cities;
     }
 
     public async Task<City?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
@@ -72,5 +65,10 @@ public class CityRepository : ICityRepository
     public void Update(City city)
     {
         _context.Cities.Update(city);
+    }
+
+    public async Task<int> GetCountAsync(CancellationToken cancellationToken)
+    {
+        return await _context.Cities.CountAsync(cancellationToken);
     }
 }

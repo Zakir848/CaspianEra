@@ -52,7 +52,7 @@ public class UserService : IUserService
             await _context.Database.BeginTransactionAsync(
                 cancellationToken);
 
-        var user = new AppUser
+        var hotelOwner = new AppUser
         {
             Id = Guid.NewGuid(),
             UserName = email,
@@ -63,7 +63,7 @@ public class UserService : IUserService
 
         // İstifadəçini yaradır və parolu hash edərək saxlayır.
         var createResult = await _userManager.CreateAsync(
-            user,
+            hotelOwner,
             password);
 
         if (!createResult.Succeeded)
@@ -77,7 +77,7 @@ public class UserService : IUserService
 
         // Yaradılmış istifadəçiyə owner rolu verir.
         var roleResult = await _userManager.AddToRoleAsync(
-            user,
+            hotelOwner,
             "HotelOwner");
 
         if (!roleResult.Succeeded)
@@ -91,6 +91,6 @@ public class UserService : IUserService
 
         await transaction.CommitAsync(cancellationToken);
 
-        return user.Id;
+        return hotelOwner.Id;
     }
 }

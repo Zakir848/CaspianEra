@@ -1,0 +1,145 @@
+{
+  "auth": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password"
+  },
+
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Sign in to your CaspianEra account",
+    "button": "Sign in",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?"
+  },
+
+  "register": {
+    "title": "Create an account",
+    "subtitle": "Start planning your journey with CaspianEra",
+    "button": "Create account",
+    "hasAccount": "Already have an account?",
+    "signIn": "Sign in"
+  },
+
+  "common": {
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "viewAll": "View all",
+    "perNight": "per night",
+    "back": "Go back"
+  },
+
+  "notFound": {
+    "label": "Page not found",
+    "title": "Looks like you've lost your way",
+    "description": "The page you're looking for doesn't exist, has been removed, or its address has changed. Continue your journey with CaspianEra.",
+    "home": "Back to home",
+    "hotels": "Explore hotels",
+    "back": "Previous page"
+  },
+
+  "navbar": {
+    "home": "Home",
+    "hotels": "Hotels",
+    "cities": "Cities",
+    "experiences": "Experiences",
+    "about": "About us",
+    "loginRegister": "Login / Register"
+  },
+
+  "hero": {
+    "slogan": "TURN YOUR DREAMS INTO JOURNEYS",
+    "titleFirst": "Discover Azerbaijan",
+    "titleSecond": "with CaspianEra",
+    "description": "Unforgettable experiences, selected hotels and Azerbaijan's most beautiful destinations — all in one platform.",
+
+    "hotel": "Hotel",
+    "restaurant": "Restaurant",
+    "experience": "Experience",
+    "packages": "Packages",
+
+    "slider": {
+      "story": "Every journey tells a new story!"
+    },
+
+    "benefits": {
+      "hotels": "Selected hotels",
+      "hotelsDescription": "Quality and trusted hotels",
+
+      "safe": "Secure booking",
+      "safeDescription": "Your payments are securely protected",
+
+      "support": "24/7 support",
+      "supportDescription": "We're always here to help",
+
+      "reviews": "Real reviews",
+      "reviewsDescription": "Reviews from real guests"
+    }
+  },
+
+  "search": {
+    "destination": "Destination",
+    "destinationPlaceholder": "Where are you going?",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guests": "Guests",
+    "rooms": "Rooms",
+    "guestCount": "{{count}} guest(s)"
+  },
+
+  "home": {
+    "popularCities": "Popular Cities",
+    "featuredHotels": "Featured Hotels"
+  },
+
+  "cities": {
+    "popularDescription": "Discover the most visited cities in Azerbaijan",
+    "emptyTitle": "No cities found",
+    "emptyDescription": "There are currently no cities to display.",
+    "loadError": "Unable to load cities.",
+    "azerbaijan": "Azerbaijan",
+    "hotelCount": "{{count}} hotels"
+  },
+
+  "ads": {
+    "advertisement": "ADVERTISEMENT",
+    "title": "Your advertisement could be here!",
+    "brandTitle": "Show your brand to thousands of travelers",
+    "description": "Get closer to your target audience with CaspianEra.",
+    "placeAd": "Place an ad",
+    "contact": "Contact us",
+    "monthlyVisitors": "Monthly visitors",
+    "allAzerbaijan": "Across Azerbaijan",
+    "nationwideReach": "Nationwide audience reach",
+    "effectiveAdvertising": "Effective advertising",
+    "targetAudience": "Targeted audience",
+    "professionalSupport": "Professional support",
+    "supportDescription": "Support throughout the advertising process",
+    "bottomDescription": "Let's contribute to the future of tourism in Azerbaijan together and introduce your brand to a wider audience."
+  },
+
+  "footer": {
+    "description": "Discover Azerbaijan's hotels, cities and unique travel experiences with CaspianEra.",
+    "platform": "Platform",
+    "company": "Company",
+    "support": "Support",
+    "contact": "Contact",
+    "advertising": "Advertising",
+    "partners": "For partners",
+    "helpCenter": "Help center",
+    "terms": "Terms of use",
+    "privacy": "Privacy policy",
+    "rights": "All rights reserved."
+  }
+}

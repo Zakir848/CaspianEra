@@ -10,10 +10,11 @@ namespace CaspianEra.Application.Interfaces.Repositories;
 
 public interface ICityRepository
 {
-    Task<PagedResult<City>> GetAllAsync(int page, int pageSize, CancellationToken cancellationToken);
+    Task<List<City>> GetAllAsync(int page, int pageSize, CancellationToken cancellationToken);
     Task<City> GetByIdAsync(Guid id,CancellationToken cancellationToken);
     Task<City> CreateCityAsync(City city,CancellationToken cancellationToken);
     void Update(City city);
     void Delete(City city);
     Task SaveChangeAsync(CancellationToken cancellationToken);
+    Task<int> GetCountAsync(CancellationToken cancellationToken);
 }

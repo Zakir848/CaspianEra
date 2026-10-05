@@ -25,9 +25,9 @@ namespace CaspiEra.UI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll(Guid hotelId,CancellationToken cancellationToken)
+        public async Task<ActionResult> GetAll(int page, int pageSize, Guid hotelId, CancellationToken cancellationToken)
         {
-            var rooms = await _mediator.Send(new GetRoomsQuery(hotelId), cancellationToken);
+            var rooms = await _mediator.Send(new GetRoomsQuery(page, pageSize,hotelId), cancellationToken);
 
             return Ok(rooms);
         }

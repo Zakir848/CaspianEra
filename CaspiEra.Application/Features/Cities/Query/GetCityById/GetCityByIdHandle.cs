@@ -15,7 +15,7 @@ namespace CaspianEra.Application.Features.Cities.Query.GetCityById
 
         public async Task<City?> Handle(GetCityByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _repository.GetCityByIdAsync(request.id, cancellationToken);
+            return await _repository.GetByIdAsync(request.id, cancellationToken);
         }
     }
 }

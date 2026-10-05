@@ -25,9 +25,9 @@ namespace CaspianEra.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll(CancellationToken cancellationToken)
+        public async Task<ActionResult> GetAll(int page, int pageSize, CancellationToken cancellationToken)
         {
-            var cities = await _mediator.Send(new GetCitiesQuery(), cancellationToken);
+            var cities = await _mediator.Send(new GetCitiesQuery(page, pageSize), cancellationToken);
 
             return Ok(cities);
         }

@@ -2,11 +2,12 @@
 
 namespace CaspianEra.Application.DTOs.Cities;
 
-public class CityDto
+public class CityListDto
 {
     public Guid CityId { get; set; }
+    public int HotelCount { get; set; }
     public string CityName { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public List<IFormFile> Image { get; set; } = new();
+    public List<string> ImageUrls { get; set; } = new();
 }
 

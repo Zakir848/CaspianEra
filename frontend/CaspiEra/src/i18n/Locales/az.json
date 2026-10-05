@@ -1,0 +1,146 @@
+{
+  "auth": {
+    "firstName": "Ad",
+    "lastName": "Soyad",
+    "email": "E-poçt",
+    "password": "Şifrə",
+    "confirmPassword": "Şifrəni təsdiqlə"
+  },
+
+  "login": {
+    "title": "Xoş gəlmisiniz",
+    "subtitle": "CaspianEra hesabınıza daxil olun",
+    "button": "Daxil ol",
+    "noAccount": "Hesabınız yoxdur?",
+    "signUp": "Qeydiyyatdan Keç",
+    "rememberMe": "Məni xatırla",
+    "forgotPassword": "Şifrəni unutmusunuz?"
+  },
+
+  "register": {
+    "title": "Hesab yaradın",
+    "subtitle": "CaspianEra ilə səyahətinizi planlaşdırmağa başlayın",
+    "button": "Qeydiyyatdan keç",
+    "hasAccount": "Artıq hesabınız var?",
+    "signIn": "Daxil ol",
+    "passwordMismatch": "Şifrə təsdiq olunmadı"
+  },
+
+  "common": {
+    "search": "Axtar",
+    "loading": "Yüklənir...",
+    "error": "Xəta baş verdi",
+    "retry": "Yenidən yoxla",
+    "cancel": "Ləğv et",
+    "confirm": "Təsdiqlə",
+    "save": "Yadda saxla",
+    "delete": "Sil",
+    "edit": "Redaktə et",
+    "viewAll": "Hamısına bax",
+    "perNight": "gecəlik",
+    "back": "Geri qayıt"
+  },
+
+  "notFound": {
+    "label": "Səhifə tapılmadı",
+    "title": "Deyəsən yolunuzu itirmisiniz",
+    "description": "Axtardığınız səhifə mövcud deyil, silinib və ya ünvanı dəyişdirilib. Səyahətinizə CaspianEra ilə davam edə bilərsiniz.",
+    "home": "Ana səhifəyə qayıt",
+    "hotels": "Otelləri kəşf et",
+    "back": "Əvvəlki səhifə"
+  },
+
+  "navbar": {
+    "home": "Ana səhifə",
+    "hotels": "Otellər",
+    "cities": "Şəhərlər",
+    "experiences": "Təcrübələr",
+    "about": "Haqqımızda",
+    "loginRegister": "Daxil ol / Qeydiyyat"
+  },
+
+  "hero": {
+    "slogan": "XƏYALLARINIZI SƏYAHƏTƏ ÇEVİRİN",
+    "titleFirst": "CaspianEra ilə",
+    "titleSecond": "Azərbaycanı kəşf et",
+    "description": "Unudulmaz təcrübələr, seçilmiş otellər və Azərbaycanın ən gözəl məkanları bir platformada.",
+
+    "hotel": "Otel",
+    "restaurant": "Restoran",
+    "experience": "Təcrübə",
+    "packages": "Paketlər",
+
+    "slider": {
+      "story": "Hər səyahət yeni hekayədir!"
+    },
+
+    "benefits": {
+      "hotels": "Seçilmiş otellər",
+      "hotelsDescription": "Keyfiyyətli və etibarlı otellər",
+
+      "safe": "Təhlükəsiz rezervasiya",
+      "safeDescription": "Ödənişləriniz təhlükəsiz qorunur",
+
+      "support": "7/24 dəstək",
+      "supportDescription": "Hər zaman sizə dəstək oluruq",
+
+      "reviews": "Real rəylər",
+      "reviewsDescription": "Həqiqi qonaqların rəyləri"
+    }
+  },
+
+  "search": {
+    "destination": "Məkan",
+    "destinationPlaceholder": "Hara gedirsiniz?",
+    "checkIn": "Giriş",
+    "checkOut": "Çıxış",
+    "guests": "Qonaqlar",
+    "rooms": "Otaqlar",
+    "guestCount": "{{count}} qonaq"
+  },
+
+  "home": {
+    "popularCities": "Populyar Şəhərlər",
+    "featuredHotels": "Seçilmiş Otellər"
+  },
+
+  "cities": {
+    "popularDescription": "Azərbaycanın ən çox ziyarət edilən şəhərlərini kəşf edin",
+    "emptyTitle": "Şəhər tapılmadı",
+    "emptyDescription": "Hazırda göstəriləcək şəhər mövcud deyil.",
+    "loadError": "Şəhərləri yükləmək mümkün olmadı.",
+    "azerbaijan": "Azərbaycan",
+    "hotelCount": "{{count}} otel"
+  },
+
+  "ads": {
+    "advertisement": "REKLAM YERİ",
+    "title": "Sizin reklamınız burada ola bilər!",
+    "brandTitle": "Brendinizi minlərlə səyahətçiyə göstərin",
+    "description": "CaspianEra ilə hədəf auditoriyanıza daha yaxın olun.",
+    "placeAd": "Reklam yerləşdir",
+    "contact": "Bizimlə əlaqə saxlayın",
+    "monthlyVisitors": "Aylıq ziyarətçi",
+    "allAzerbaijan": "Bütün Azərbaycan",
+    "nationwideReach": "Geniş auditoriya əhatəsi",
+    "effectiveAdvertising": "Effektiv reklam",
+    "targetAudience": "Hədəflənmiş auditoriya",
+    "professionalSupport": "Peşəkar dəstək",
+    "supportDescription": "Reklam prosesində dəstək",
+    "bottomDescription": "Azərbaycan turizminin gələcəyinə birlikdə töhfə verək və brendinizi daha geniş auditoriyaya çatdıraq."
+  },
+
+  "footer": {
+    "description": "Azərbaycanın otellərini, şəhərlərini və unikal səyahət təcrübələrini CaspianEra ilə kəşf edin.",
+    "platform": "Platforma",
+    "company": "Şirkət",
+    "support": "Dəstək",
+    "contact": "Əlaqə",
+    "advertising": "Reklam",
+    "partners": "Partnyorlar üçün",
+    "helpCenter": "Yardım mərkəzi",
+    "terms": "İstifadə şərtləri",
+    "privacy": "Məxfilik siyasəti",
+    "rights": "Bütün hüquqlar qorunur."
+  }
+}

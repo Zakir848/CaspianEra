@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import HotelCard from "./HotelCard";
+import HotelCard from "./TestHotel"
 
 export default function HotelsList({ hotels = [] }) {
   return (

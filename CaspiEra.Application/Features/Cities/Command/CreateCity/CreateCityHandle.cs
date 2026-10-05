@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CaspianEra.Application.Features.Cities.Command.CreateCity;
 
-public class CreateCityHandle : IRequestHandler<CreateCityCommand, CityDto>
+public class CreateCityHandle : IRequestHandler<CreateCityCommand, CityListDto>
 {
     private readonly ICityRepository _cityRepository;
     private readonly IMapper _mapper;
@@ -25,7 +25,7 @@ public class CreateCityHandle : IRequestHandler<CreateCityCommand, CityDto>
         _fileStorageService = fileStorageService;
     }
 
-    public async Task<CityDto> Handle(CreateCityCommand request, CancellationToken cancellationToken)
+    public async Task<CityListDto> Handle(CreateCityCommand request, CancellationToken cancellationToken)
     {
         var city = _mapper.Map<City>(request.dto);
 
@@ -46,6 +46,6 @@ public class CreateCityHandle : IRequestHandler<CreateCityCommand, CityDto>
 
         await _cityRepository.SaveChangeAsync(cancellationToken);
 
-        return _mapper.Map<CityDto>(city);
+        return _mapper.Map<CityListDto>(city);
     }
 }

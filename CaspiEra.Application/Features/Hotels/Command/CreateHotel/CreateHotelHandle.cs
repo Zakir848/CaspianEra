@@ -38,7 +38,7 @@ public class CreateHotelHandle : IRequestHandler<CreateHotelCommand, HotelDto>
             }
         }
 
-        await _repository.CreatAsync(hotel, cancellationToken);
+        await _repository.CreateAsync(hotel, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
 
 

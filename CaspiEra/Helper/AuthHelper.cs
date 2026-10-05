@@ -40,7 +40,6 @@ public class AuthHelper : IAuthHelper
         return new AuthResponse
         {
             UserId = user.Id,
-            UserName = user.UserName!,
             Email = user.Email!,
             FirstName = user.FirstName,
             LastName = user.LastName,

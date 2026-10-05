@@ -26,6 +26,6 @@ public class CityMappingProfile : Profile
         //             opt => opt.MapFrom(src => src.Name))
 
 
-        CreateMap<City, CityDto>();
+        CreateMap<City, CityListDto>();
     }
 }
