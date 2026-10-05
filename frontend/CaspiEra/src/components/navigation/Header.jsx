@@ -190,7 +190,7 @@ export default function Header() {
                     textTransform: "uppercase",
                   }}
                 >
-                  {t("hero.discover")}
+                  {t("hero.titleSecond")}
                 </Typography>
               </Box>
             </Box>

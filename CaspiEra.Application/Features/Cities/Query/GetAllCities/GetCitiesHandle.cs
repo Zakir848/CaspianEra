@@ -33,7 +33,6 @@ public class GetCitiesHandle : IRequestHandler<GetCitiesQuery, PagedResult<CityL
             Description = c.Description,
             ImageUrls = c.CityImages.Select(ci => ci.ImageUrl).ToList(),
             HotelCount = c.Hotels.Count
-
         }).ToList();
 
         return new PagedResult<CityListDto>

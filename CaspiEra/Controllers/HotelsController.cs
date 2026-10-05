@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CaspiEra.UI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/Cities/{cityId:guid}/Hotels")]
     public class HotelsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,9 +20,9 @@ namespace CaspiEra.UI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll(CancellationToken cancellationToken)
+        public async Task<ActionResult> GetAll(Guid cityId, CancellationToken cancellationToken)
         {
-            var hotels = await _mediator.Send(new GetHotelsQuery(), cancellationToken);
+            var hotels = await _mediator.Send(new GetHotelsQuery(cityId), cancellationToken);
 
             return Ok(hotels);
         }

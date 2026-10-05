@@ -23,5 +23,8 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
         builder.Property(h => h.Name)
             .IsRequired()
             .HasMaxLength(200);
+
+        builder.Property(h => h.OwnerId)
+            .IsRequired();
     }
 }

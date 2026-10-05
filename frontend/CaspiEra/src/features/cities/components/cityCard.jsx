@@ -15,10 +15,9 @@ export default function CityCard({
 
   return (
     <Box
-      onClick={() => onClick?.(city)}
+      onClick={() => onClick?.(city.id)}
       sx={{
         position: "relative",
-
         height: {
           xs: 180,
           sm: 200,
@@ -31,13 +30,9 @@ export default function CityCard({
 
         cursor: "pointer",
 
-        backgroundImage: `url(${
-          city.imageUrls ||
-          "/images/city-placeholder.jpg"
-        })`,
+        backgroundImage: `url(${city.imageUrls || city.cityName})`,
 
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        objectFit: "cover",
 
         boxShadow:
           "0 5px 20px rgba(15, 23, 42, 0.08)",
@@ -67,11 +62,8 @@ export default function CityCard({
       <Box
         className="city-image"
         component="img"
-        src={
-          city.imageUrl ||
-          "/images/city-placeholder.jpg"
-        }
-        alt={city.name}
+        src={city.imageUrls}
+        alt={city.cityName}
         sx={{
           position: "absolute",
           inset: 0,
@@ -79,7 +71,7 @@ export default function CityCard({
           width: "100%",
           height: "100%",
 
-          objectFit: "cover",
+          objectFit: "fill",
 
           transition: "transform .4s ease",
         }}
@@ -137,7 +129,7 @@ export default function CityCard({
               mt: 0.5,
 
               display: "flex",
-              alignItems: "center",
+              alignItems: " ",
 
               gap: 0.5,
 
@@ -145,19 +137,29 @@ export default function CityCard({
                 "rgba(255,255,255,.85)",
             }}
           >
+
             <LocationOnOutlinedIcon
               sx={{
                 fontSize: 15,
               }}
             />
+            <Box>
 
-            <Typography
-              sx={{
-                fontSize: 12,
-              }}
-            >
-              {city.hotelCount}
-            </Typography>
+              <Typography
+                sx={{
+                  fontSize: 12,
+                }}
+              >
+                Hotels: {city.hotelCount}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: 12,
+                }}
+              >
+                {city.cityName}
+              </Typography>
+            </Box>
           </Box>
         )}
       </Box>

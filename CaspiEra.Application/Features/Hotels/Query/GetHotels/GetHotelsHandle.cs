@@ -17,7 +17,7 @@ public class GetHotelsHandle : IRequestHandler<GetHotelsQuery, PagedResult<Hotel
 
     public async Task<PagedResult<HotelDto>> Handle(GetHotelsQuery request, CancellationToken cancellationToken)
     {
-        var hotels = await _repository.GetAllAsync(request.page, request.pageSize, cancellationToken);
+        var hotels = await _repository.GetAllAsync(request.cityId,request.page, request.pageSize, cancellationToken);
 
         var totalCount = await _repository.GetCountAsync(cancellationToken);
 

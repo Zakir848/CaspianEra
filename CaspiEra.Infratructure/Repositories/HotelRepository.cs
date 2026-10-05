@@ -14,11 +14,12 @@ namespace CaspiEra.Infratructure.Repositories
             _context = context;
         }
 
-        public async Task<List<Hotel>> GetAllAsync(int page, int pageSize, CancellationToken cancellationToken)
+        public async Task<List<Hotel>> GetAllAsync(Guid cityId, int page, int pageSize, CancellationToken cancellationToken)
         {
             return await _context.Hotels
                 .AsNoTracking()
-                .Include(x => x.City)
+                .Where(x=>x.CityId == cityId)
+                .Include(x => x.City)                
                 .Include(x => x.HotelImages)
                 .OrderBy(x=> x.Id)
                 .Skip((page - 1) * pageSize)

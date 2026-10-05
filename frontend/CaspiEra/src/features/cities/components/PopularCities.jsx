@@ -8,12 +8,11 @@ import {
 
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
-import CityCard from "./CityCard";
-
 import Loading from "../../../components/common/Loading";
 import ErrorMessage from "../../../components/common/ErrorMessage";
 import EmptyState from "../../../components/common/EmptyState";
 import useCities from "../hooks/useCities";
+import CityCard from "./cityCard";
 
 export default function PopularCities({
   onCityClick,
@@ -156,7 +155,7 @@ export default function PopularCities({
           }}
         >
           {cities.map((city) => (
-            <CityCard
+            <CityCard 
               key={city.id}
               city={city}
               onClick={onCityClick}

@@ -56,8 +56,7 @@ namespace CaspianEra.API.Controllers
                 nameof(GetById),
                 new
                 {
-                    name = city.CityName,
-                    image = dto.Image,
+                    id = city.CityId
                 },
                 city
             );
