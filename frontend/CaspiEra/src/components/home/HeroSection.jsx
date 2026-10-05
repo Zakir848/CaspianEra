@@ -1,7 +1,4 @@
-import {
-  Box,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import HeroServiceTabs from "./HeroServiceTabs";
 import HeroSearchBar from "./HeroSearchBar";
@@ -59,7 +56,6 @@ export default function HeroSection({
 
           maxWidth: {
             xs: "100%",
-            md: 760,
           },
 
           mx: "auto",
@@ -71,8 +67,7 @@ export default function HeroSection({
           sx={{
             mb: 1.5,
 
-            color:
-              "rgba(255,255,255,.78)",
+            color: "rgba(255,255,255,.78)",
 
             fontSize: {
               xs: 10,
@@ -98,8 +93,7 @@ export default function HeroSection({
           sx={{
             color: "#FFFFFF",
 
-            fontFamily:
-              "Georgia, 'Times New Roman', serif",
+            fontFamily: "Georgia, 'Times New Roman', serif",
 
             fontSize: {
               xs: 40,
@@ -138,8 +132,7 @@ export default function HeroSection({
 
             maxWidth: 570,
 
-            color:
-              "rgba(255,255,255,.80)",
+            color: "rgba(255,255,255,.80)",
 
             fontSize: {
               xs: 14,
@@ -213,8 +206,7 @@ export default function HeroSection({
             lg: "flex-end",
           },
 
-          justifyContent:
-            "space-between",
+          justifyContent: "space-between",
 
           gap: 3,
         }}

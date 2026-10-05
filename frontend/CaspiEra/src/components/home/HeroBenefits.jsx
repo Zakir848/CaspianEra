@@ -1,7 +1,4 @@
-import {
-  Box,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
@@ -17,30 +14,22 @@ export default function HeroBenefits() {
     {
       icon: WorkspacePremiumOutlinedIcon,
       title: t("hero.benefits.hotels"),
-      description: t(
-        "hero.benefits.hotelsDescription"
-      ),
+      description: t("hero.benefits.hotelsDescription"),
     },
     {
       icon: ShieldOutlinedIcon,
       title: t("hero.benefits.safe"),
-      description: t(
-        "hero.benefits.safeDescription"
-      ),
+      description: t("hero.benefits.safeDescription"),
     },
     {
       icon: HeadsetMicOutlinedIcon,
       title: t("hero.benefits.support"),
-      description: t(
-        "hero.benefits.supportDescription"
-      ),
+      description: t("hero.benefits.supportDescription"),
     },
     {
       icon: StarBorderRoundedIcon,
       title: t("hero.benefits.reviews"),
-      description: t(
-        "hero.benefits.reviewsDescription"
-      ),
+      description: t("hero.benefits.reviewsDescription"),
     },
   ];
 
@@ -93,8 +82,7 @@ export default function HeroBenefits() {
                 alignItems: "center",
                 justifyContent: "center",
 
-                border:
-                  "1px solid rgba(255,255,255,.65)",
+                border: "1px solid rgba(255,255,255,.65)",
 
                 borderRadius: "50%",
 
@@ -110,8 +98,9 @@ export default function HeroBenefits() {
                   color: "#FFFFFF",
 
                   fontSize: {
-                    xs: 11,
-                    md: 13,
+                    xs: 13,
+                    sd: 15,
+                    md: 18,
                   },
 
                   fontWeight: 700,
@@ -129,10 +118,10 @@ export default function HeroBenefits() {
                     sm: "block",
                   },
 
-                  color:
-                    "rgba(255,255,255,.65)",
+                  color: "rgba(255,255,255,.65)",
 
-                  fontSize: 10,
+                  fontSize: 11,
+                  fontWeight: 600,
                 }}
               >
                 {item.description}

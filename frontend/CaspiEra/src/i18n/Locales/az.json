@@ -99,6 +99,14 @@
     "guestCount": "{{count}} qonaq"
   },
 
+  "searchRequired": {
+    "destinationRequired": "Zəhmət olmasa gedəcəyiniz məkanı seçin.",
+    "checkInRequired": "Giriş tarixini seçin.",
+    "checkOutRequired": "Çıxış tarixini seçin.",
+    "invalidDateRange": "Çıxış tarixi giriş tarixindən sonra olmalıdır.",
+    "guestsRequired": "Ən azı 1 qonaq seçilməlidir."
+  },
+
   "home": {
     "popularCities": "Populyar Şəhərlər",
     "featuredHotels": "Seçilmiş Otellər"

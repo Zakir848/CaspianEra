@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Container } from "@mui/material";
 
 import Header from "../components/navigation/Header";
@@ -9,10 +9,8 @@ import RightAdBanner from "../components/home/RightAdBanner";
 
 import PopularCities from "../features/cities/components/PopularCities";
 
-// HERO IMAGES
-import hero1 from "../assets/baku-hero.png";
-import hero2 from "../assets/baku-hero-light.png";
-import { useAuthStore } from "../features/auth/store/useAuthStore";
+import hero1 from "../assets/baku-hero-light.png";
+import hero2 from "../assets/baku-hero.png";
 
 export default function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -40,15 +38,25 @@ export default function HomePage() {
 
   const currentSlide = slides[activeSlide];
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide((current) =>
+        current === slides.length - 1 ? 0 : current + 1
+      );
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
   const handleNext = () => {
     setActiveSlide((current) =>
-      current === slides.length - 1 ? 0 : current + 1,
+      current === slides.length - 1 ? 0 : current + 1
     );
   };
 
   const handlePrevious = () => {
     setActiveSlide((current) =>
-      current === 0 ? slides.length - 1 : current - 1,
+      current === 0 ? slides.length - 1 : current - 1
     );
   };
 
@@ -77,115 +85,172 @@ export default function HomePage() {
             xl: 800,
           },
 
-          backgroundImage: `
-            linear-gradient(
-              90deg,
-              rgba(13, 34, 53, .72) 0%,
-              rgba(13, 34, 53, .40) 45%,
-              rgba(13, 34, 53, .24) 100%
-            ),
-            url(${currentSlide.image})
-          `,
-
-          backgroundSize: "cover",
-
-          backgroundPosition: {
-            xs: "58% center",
-            sm: "55% center",
-            md: "center center",
-          },
-
-          backgroundRepeat: "no-repeat",
-
           overflow: "hidden",
 
-          transition: "background-image .5s ease",
+          bgcolor: "primary.dark",
         }}
       >
-        {/* HEADER */}
+        {/* =====================================
+            BACKGROUND SLIDES
+        ===================================== */}
 
-        <Header />
+        {slides.map((slide, index) => (
+          <Box
+            key={slide.id}
+            sx={{
+              position: "absolute",
+              inset: 0,
 
-        {/* =================================
-            HERO BODY
-        ================================= */}
+              width: "100%",
+              height: "100%",
+
+              backgroundImage: `url(${slide.image})`,
+
+              backgroundSize: "cover",
+
+              backgroundPosition: {
+                xs: "58% center",
+                sm: "55% center",
+                md: "center center",
+              },
+
+              backgroundRepeat: "no-repeat",
+
+              /*
+               * active slide = ekranda
+               * sonrakılar = sağ tərəfdə
+               * əvvəlkilər = sol tərəfdə
+               */
+              transform:
+                index === activeSlide
+                  ? "translateX(0%)"
+                  : index < activeSlide
+                    ? "translateX(-100%)"
+                    : "translateX(100%)",
+
+              transition:
+                "transform 900ms cubic-bezier(0.77, 0, 0.175, 1)",
+
+              willChange: "transform",
+
+              zIndex: 0,
+            }}
+          />
+        ))}
+
+        {/* =====================================
+            DARK OVERLAY
+        ===================================== */}
 
         <Box
           sx={{
-            width: "100%",
-            maxWidth: "1920px",
+            position: "absolute",
+            inset: 0,
 
-            mx: "auto",
+            zIndex: 1,
 
-            px: {
-              xs: 2,
-              sm: 3,
-              lg: 2,
-              xl: 3,
-            },
+            pointerEvents: "none",
 
-            pb: {
-              xs: 4,
-              md: 3,
-            },
+            background: `
+              linear-gradient(
+                90deg,
+                rgba(13, 34, 53, .72) 0%,
+                rgba(13, 34, 53, .40) 45%,
+                rgba(13, 34, 53, .24) 100%
+              )
+            `,
+          }}
+        />
 
-            display: "grid",
+        {/* =====================================
+            HERO CONTENT
+        ===================================== */}
 
-            gridTemplateColumns: {
-              xs: "minmax(0, 1fr)",
-              lg: "210px minmax(0, 1fr) 210px",
-              xl: "230px minmax(0, 1fr) 230px",
-            },
-
-            gap: {
-              xs: 0,
-              lg: 2,
-              xl: 2.5,
-            },
-
-            alignItems: "stretch",
+        <Box
+          sx={{
+            position: "relative",
+            zIndex: 2,
           }}
         >
-          {/* LEFT AD */}
+          <Header />
 
           <Box
-            component="aside"
             sx={{
-              display: {
-                xs: "none",
-                lg: "block",
+              width: "100%",
+              maxWidth: "1920px",
+
+              mx: "auto",
+
+              px: {
+                xs: 2,
+                sm: 3,
+                lg: 2,
+                xl: 3,
               },
 
-              py: 2,
-            }}
-          >
-            <LeftAdBanner />
-          </Box>
-
-          {/* CENTER HERO */}
-
-          <HeroSection
-            slide={currentSlide}
-            activeSlide={activeSlide}
-            totalSlides={slides.length}
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-          />
-
-          {/* RIGHT AD */}
-
-          <Box
-            component="aside"
-            sx={{
-              display: {
-                xs: "none",
-                lg: "block",
+              pb: {
+                xs: 4,
+                md: 3,
               },
 
-              py: 2,
+              display: "grid",
+
+              gridTemplateColumns: {
+                xs: "minmax(0, 1fr)",
+                lg: "210px minmax(0, 1fr) 210px",
+                xl: "230px minmax(0, 1fr) 230px",
+              },
+
+              gap: {
+                xs: 0,
+                lg: 2,
+                xl: 2.5,
+              },
+
+              alignItems: "stretch",
             }}
           >
-            <RightAdBanner />
+            {/* LEFT AD */}
+
+            <Box
+              component="aside"
+              sx={{
+                display: {
+                  xs: "none",
+                  lg: "block",
+                },
+
+                py: 2,
+              }}
+            >
+              <LeftAdBanner />
+            </Box>
+
+            {/* CENTER HERO */}
+
+            <HeroSection
+              slide={currentSlide}
+              activeSlide={activeSlide}
+              totalSlides={slides.length}
+              onNext={handleNext}
+              onPrevious={handlePrevious}
+            />
+
+            {/* RIGHT AD */}
+
+            <Box
+              component="aside"
+              sx={{
+                display: {
+                  xs: "none",
+                  lg: "block",
+                },
+
+                py: 2,
+              }}
+            >
+              <RightAdBanner />
+            </Box>
           </Box>
         </Box>
       </Box>
@@ -197,6 +262,7 @@ export default function HomePage() {
       <Box
         sx={{
           bgcolor: "background.paper",
+          position: "relative",
 
           py: {
             xs: 4,

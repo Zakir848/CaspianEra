@@ -17,15 +17,77 @@ import {
   VisibilityOff,
 } from "@mui/icons-material";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "../components/navigation/LanguageSelector";
-import useCities from "../features/cities/hooks/useCities";
+import { login } from "../features/auth/api/authApi";
+import { useAuthStore } from "../features/auth/store/useAuthStore";
 
 export default function LoginPage() {
   const { t } = useTranslation();
 
+  const navigate = useNavigate();
+
+  const setAuth = useAuthStore((state) => state.setAuth);
+
   const [showPassword, setShowPassword] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm((current) => ({
+      ...current,
+      [name]: value,
+    }));
+  };
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!form.email) {
+      setError("Login");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const result = await login(form);
+
+      setAuth({
+        accessToken: result.userId,
+        refreshToken: result.refreshToken,
+        user: {
+          email: result.email,
+        },
+      });
+      navigate("/");
+    } catch (err) {
+      console.log(err.response?.data);
+      
+      const data = err.response?.data;
+      console.log(data);
+        
+      if (data?.errors) {
+        setError(data.errors.join(" "));
+        console.log(data?.errors.join(" "));
+      } else {
+        console.log(data?.message);
+        setError(data?.message || "Login failed.");
+      }
+      
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <Box
@@ -237,9 +299,13 @@ export default function LoginPage() {
               flexDirection: "column",
               gap: 2.2,
             }}
+            onSubmit={handleSubmit}
           >
             <TextField
               fullWidth
+              name="email"
+              value={form.email}
+              onChange={handleChange}
               label={t("auth.email")}
               type="email"
               autoComplete="email"
@@ -265,6 +331,9 @@ export default function LoginPage() {
 
             <TextField
               fullWidth
+              name="password"
+              value={form.password}
+              onChange={handleChange}
               label={t("auth.password")}
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
@@ -298,6 +367,7 @@ export default function LoginPage() {
                 },
               }}
             />
+            {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
 
             <Box
               sx={{
@@ -350,6 +420,7 @@ export default function LoginPage() {
               type="submit"
               fullWidth
               variant="contained"
+              disabled={loading}
               sx={{
                 minHeight: 52,
                 mt: 1,

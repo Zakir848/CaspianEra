@@ -2,8 +2,8 @@ import axios from "axios";
 import { useAuthStore } from "../features/auth/store/useAuthStore";
 
 const api = axios.create({
-    baseURL:`https://localhost:7006/api`,
-})
+  baseURL: `https://localhost:7006/api`,
+});
 
 api.interceptors.request.use((config) => {
   const accessToken = useAuthStore.getState().accessToken;
@@ -35,10 +35,7 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (
-      error.response?.status === 401 &&
-      !originalRequest._retry
-    ) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           pendingRequests.push({ resolve, reject });
@@ -52,18 +49,17 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const refreshToken =
-          useAuthStore.getState().refreshToken;
+        const refreshToken = useAuthStore.getState().refreshToken;
 
         if (!refreshToken) {
-          throw new Error('Refresh token is missing.');
+          throw new Error("Refresh token is missing.");
         }
 
         const response = await axios.post(
-          'https://localhost:7006/api/auth/refresh',
+          "https://localhost:7006/api/auth/refresh",
           {
             refreshToken,
-          }
+          },
         );
 
         const {
@@ -88,8 +84,7 @@ api.interceptors.response.use(
 
         processQueue(null, accessToken);
 
-        originalRequest.headers.Authorization =
-          `Bearer ${accessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
         return api(originalRequest);
       } catch (refreshError) {
@@ -97,7 +92,7 @@ api.interceptors.response.use(
 
         useAuthStore.getState().logout();
 
-        window.location.href = '/login';
+        window.location.href = "/login";
 
         return Promise.reject(refreshError);
       } finally {
@@ -106,8 +101,7 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
-
 
 export default api;

@@ -16,6 +16,7 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import HotelRoundedIcon from "@mui/icons-material/HotelRounded";
 
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const FooterLink = ({ children, onClick }) => {
   return (
@@ -148,26 +149,26 @@ export default function Footer() {
                 mt: 2.5,
               }}
             >
-              <IconButton
-                aria-label="Instagram"
-                sx={socialButtonStyle}
+              <Box
+                component={Link}
+                to="https://www.instagram.com/caspianera.az/"
               >
-                <InstagramIcon fontSize="small" />
-              </IconButton>
+                <IconButton aria-label="Instagram" sx={socialButtonStyle}>
+                  <InstagramIcon fontSize="small" />
+                </IconButton>
+              </Box>
 
-              <IconButton
-                aria-label="Facebook"
-                sx={socialButtonStyle}
-              >
-                <FacebookRoundedIcon fontSize="small" />
-              </IconButton>
+              <Box component={Link} to="">
+                <IconButton aria-label="Facebook" sx={socialButtonStyle}>
+                  <FacebookRoundedIcon fontSize="small" />
+                </IconButton>
+              </Box>
 
-              <IconButton
-                aria-label="LinkedIn"
-                sx={socialButtonStyle}
-              >
-                <LinkedInIcon fontSize="small" />
-              </IconButton>
+              <Box component={Link} to="">
+                <IconButton aria-label="LinkedIn" sx={socialButtonStyle}>
+                  <LinkedInIcon fontSize="small" />
+                </IconButton>
+              </Box>
             </Stack>
           </Box>
 
@@ -176,30 +177,18 @@ export default function Footer() {
           ========================= */}
 
           <Box>
-            <FooterTitle>
-              {t("footer.platform")}
-            </FooterTitle>
+            <FooterTitle>{t("footer.platform")}</FooterTitle>
 
             <Stack spacing={1.5}>
-              <FooterLink>
-                {t("navbar.hotels")}
-              </FooterLink>
+              <FooterLink>{t("navbar.hotels")}</FooterLink>
 
-              <FooterLink>
-                {t("navbar.cities")}
-              </FooterLink>
+              <FooterLink>{t("navbar.cities")}</FooterLink>
 
-              <FooterLink>
-                {t("navbar.experiences")}
-              </FooterLink>
+              <FooterLink>{t("navbar.experiences")}</FooterLink>
 
-              <FooterLink>
-                {t("footer.partners")}
-              </FooterLink>
+              <FooterLink>{t("footer.partners")}</FooterLink>
 
-              <FooterLink>
-                {t("footer.advertising")}
-              </FooterLink>
+              <FooterLink>{t("footer.advertising")}</FooterLink>
             </Stack>
           </Box>
 
@@ -208,26 +197,16 @@ export default function Footer() {
           ========================= */}
 
           <Box>
-            <FooterTitle>
-              {t("footer.company")}
-            </FooterTitle>
+            <FooterTitle>{t("footer.company")}</FooterTitle>
 
             <Stack spacing={1.5}>
-              <FooterLink>
-                {t("navbar.about")}
-              </FooterLink>
+              <FooterLink>{t("navbar.about")}</FooterLink>
 
-              <FooterLink>
-                {t("footer.helpCenter")}
-              </FooterLink>
+              <FooterLink>{t("footer.helpCenter")}</FooterLink>
 
-              <FooterLink>
-                {t("footer.terms")}
-              </FooterLink>
+              <FooterLink>{t("footer.terms")}</FooterLink>
 
-              <FooterLink>
-                {t("footer.privacy")}
-              </FooterLink>
+              <FooterLink>{t("footer.privacy")}</FooterLink>
             </Stack>
           </Box>
 
@@ -236,32 +215,18 @@ export default function Footer() {
           ========================= */}
 
           <Box>
-            <FooterTitle>
-              {t("footer.contact")}
-            </FooterTitle>
+            <FooterTitle>{t("footer.contact")}</FooterTitle>
 
             <Stack spacing={2}>
-              <ContactItem
-                icon={
-                  <LocationOnOutlinedIcon />
-                }
-              >
+              <ContactItem icon={<LocationOnOutlinedIcon />}>
                 Bakı, Azərbaycan
               </ContactItem>
 
-              <ContactItem
-                icon={
-                  <EmailOutlinedIcon />
-                }
-              >
+              <ContactItem icon={<EmailOutlinedIcon />}>
                 info@caspianera.az
               </ContactItem>
 
-              <ContactItem
-                icon={
-                  <PhoneOutlinedIcon />
-                }
-              >
+              <ContactItem icon={<PhoneOutlinedIcon />}>
                 +994 XX XXX XX XX
               </ContactItem>
             </Stack>
@@ -277,8 +242,7 @@ export default function Footer() {
               md: 5,
             },
 
-            borderColor:
-              "rgba(255,255,255,.10)",
+            borderColor: "rgba(255,255,255,.10)",
           }}
         />
 
@@ -310,8 +274,7 @@ export default function Footer() {
               fontSize: 12,
             }}
           >
-            © {new Date().getFullYear()} CaspianEra.{" "}
-            {t("footer.rights")}
+            © {new Date().getFullYear()} CaspianEra. {t("footer.rights")}
           </Typography>
 
           <Box
@@ -327,13 +290,9 @@ export default function Footer() {
               },
             }}
           >
-            <FooterBottomLink>
-              {t("footer.terms")}
-            </FooterBottomLink>
+            <FooterBottomLink>{t("footer.terms")}</FooterBottomLink>
 
-            <FooterBottomLink>
-              {t("footer.privacy")}
-            </FooterBottomLink>
+            <FooterBottomLink>{t("footer.privacy")}</FooterBottomLink>
           </Box>
         </Box>
       </Container>

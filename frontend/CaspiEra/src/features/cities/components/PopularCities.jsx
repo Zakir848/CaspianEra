@@ -1,10 +1,5 @@
 import { useTranslation } from "react-i18next";
-import {
-  Box,
-  Button,
-  Container,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
@@ -14,49 +9,34 @@ import EmptyState from "../../../components/common/EmptyState";
 import useCities from "../hooks/useCities";
 import CityCard from "./cityCard";
 
-export default function PopularCities({
-  onCityClick,
-  onViewAll,
-}) {
+export default function PopularCities({ onCityClick, onViewAll }) {
   const { t } = useTranslation();
 
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useCities({
+  const { data, isLoading, isError, error, refetch } = useCities({
     page: 1,
     pageSize: 6,
   });
 
   if (isLoading) {
-    return (
-      <Loading text={t("common.loading")} />
-    );
+    return <Loading text={t("common.loading")} />;
   }
 
   if (isError) {
     return (
       <ErrorMessage
-        message={
-          error?.message || t("common.error")
-        }
+        message={error?.message || t("common.error")}
         onRetry={refetch}
       />
     );
   }
 
   const cities = data?.items ?? [];
-    
+
   if (cities.length === 0) {
     return (
       <EmptyState
         title={t("cities.emptyTitle")}
-        description={t(
-          "cities.emptyDescription"
-        )}
+        description={t("cities.emptyDescription")}
       />
     );
   }
@@ -81,6 +61,7 @@ export default function PopularCities({
             justifyContent: "space-between",
 
             gap: 2,
+            position: "relative",
           }}
         >
           <Box>
@@ -113,17 +94,13 @@ export default function PopularCities({
                 fontSize: 14,
               }}
             >
-              {t(
-                "cities.popularDescription"
-              )}
+              {t("cities.popularDescription")}
             </Typography>
           </Box>
 
           <Button
             onClick={onViewAll}
-            endIcon={
-              <ArrowForwardRoundedIcon />
-            }
+            endIcon={<ArrowForwardRoundedIcon />}
             sx={{
               color: "#0B3B60",
               textTransform: "none",
@@ -155,11 +132,7 @@ export default function PopularCities({
           }}
         >
           {cities.map((city) => (
-            <CityCard 
-              key={city.id}
-              city={city}
-              onClick={onCityClick}
-            />
+            <CityCard key={city.id} city={city} onClick={onCityClick} />
           ))}
         </Box>
       </Container>

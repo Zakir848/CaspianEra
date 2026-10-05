@@ -98,6 +98,14 @@
     "guestCount": "{{count}} гость"
   },
 
+  "searchRequired": {
+    "destinationRequired": "Пожалуйста, выберите направление.",
+    "checkInRequired": "Выберите дату заезда.",
+    "checkOutRequired": "Выберите дату выезда.",
+    "invalidDateRange": "Дата выезда должна быть позже даты заезда.",
+    "guestsRequired": "Необходимо выбрать как минимум 1 гостя."
+  },
+
   "home": {
     "popularCities": "Популярные города",
     "featuredHotels": "Избранные отели"

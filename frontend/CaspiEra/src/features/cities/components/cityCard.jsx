@@ -1,14 +1,8 @@
-import {
-  Box,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 
-export default function CityCard({
-  city,
-  onClick,
-}) {
+export default function CityCard({ city, onClick }) {
   if (!city) {
     return null;
   }
@@ -18,6 +12,11 @@ export default function CityCard({
       onClick={() => onClick?.(city.id)}
       sx={{
         position: "relative",
+        width: {
+          xs: 180,
+          sm: 200,
+          md: 400,
+        },
         height: {
           xs: 180,
           sm: 200,
@@ -34,17 +33,14 @@ export default function CityCard({
 
         objectFit: "cover",
 
-        boxShadow:
-          "0 5px 20px rgba(15, 23, 42, 0.08)",
+        boxShadow: "0 5px 20px rgba(15, 23, 42, 0.08)",
 
-        transition:
-          "transform .25s ease, box-shadow .25s ease",
+        transition: "transform .25s ease, box-shadow .25s ease",
 
         "&:hover": {
           transform: "translateY(-6px)",
 
-          boxShadow:
-            "0 15px 35px rgba(15, 23, 42, 0.16)",
+          boxShadow: "0 15px 35px rgba(15, 23, 42, 0.16)",
 
           "& .city-overlay": {
             background:
@@ -71,7 +67,7 @@ export default function CityCard({
           width: "100%",
           height: "100%",
 
-          objectFit: "fill",
+          objectFit: "cover",
 
           transition: "transform .4s ease",
         }}
@@ -116,8 +112,7 @@ export default function CityCard({
 
             fontWeight: 700,
 
-            textShadow:
-              "0 2px 8px rgba(0,0,0,.3)",
+            textShadow: "0 2px 8px rgba(0,0,0,.3)",
           }}
         >
           {city.name}
@@ -133,18 +128,15 @@ export default function CityCard({
 
               gap: 0.5,
 
-              color:
-                "rgba(255,255,255,.85)",
+              color: "rgba(255,255,255,.85)",
             }}
           >
-
             <LocationOnOutlinedIcon
               sx={{
                 fontSize: 15,
               }}
             />
             <Box>
-
               <Typography
                 sx={{
                   fontSize: 12,

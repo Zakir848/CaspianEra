@@ -4,75 +4,81 @@ const theme = createTheme({
   palette: {
     mode: "light",
 
-    // CaspianEra Navy
+    // Dərin Xəzər mavisi — tam navy deyil
     primary: {
-      main: "#17324D",
-      light: "#254D70",
-      dark: "#0D2235",
-      contrastText: "#FFFFFF",
+      main: "#183B4A",
+      light: "#315866",
+      dark: "#102B36",
+      contrastText: "#F8F5EE",
     },
 
-    // CaspianEra Gold
+    // Parlaq "AI gold" əvəzinə köhnə bürünc / brass
     secondary: {
-      main: "#D6A94F",
-      light: "#E7C58B",
-      dark: "#A97B2F",
-      contrastText: "#17324D",
+      main: "#B88A44",
+      light: "#D0AD73",
+      dark: "#8B6532",
+      contrastText: "#172A32",
     },
 
+    // Saf ağ əvəzinə isti təbii fon
     background: {
-      default: "#F7F9FC",
-      paper: "#FFFFFF",
+      default: "#F3F0E9",
+      paper: "#FBF9F4",
     },
 
+    // Qara/navy əvəzinə yumşaq mürəkkəb ton
     text: {
-      primary: "#17324D",
-      secondary: "#64748B",
+      primary: "#1D3138",
+      secondary: "#6D7472",
     },
 
-    divider: "#E8EDF2",
+    // Soyuq boz deyil, isti stone
+    divider: "#DDD7CC",
 
     success: {
-      main: "#2E7D5B",
+      main: "#56705D",
     },
 
     error: {
-      main: "#D64545",
+      main: "#A84D43",
     },
 
     warning: {
-      main: "#D6A94F",
+      main: "#C18A3D",
     },
   },
 
   shape: {
-    borderRadius: 12,
+    // hər şeyi həddindən artıq yumru etmə
+    borderRadius: 8,
   },
 
   typography: {
     fontFamily: [
       "Inter",
-      "Roboto",
       "Arial",
       "sans-serif",
     ].join(","),
 
     h1: {
-      fontWeight: 700,
+      fontWeight: 600,
       lineHeight: 1.08,
+      letterSpacing: "-0.025em",
     },
 
     h2: {
-      fontWeight: 700,
+      fontWeight: 600,
+      letterSpacing: "-0.02em",
     },
 
     h3: {
-      fontWeight: 700,
+      fontWeight: 600,
     },
 
     button: {
-      fontWeight: 700,
+      fontWeight: 600,
       textTransform: "none",
+      letterSpacing: "0.01em",
     },
   },
 
@@ -80,7 +86,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 10,
+          borderRadius: 7,
           boxShadow: "none",
         },
       },
@@ -89,7 +95,7 @@ const theme = createTheme({
     MuiIconButton: {
       styleOverrides: {
         root: {
-          borderRadius: 10,
+          borderRadius: 8,
         },
       },
     },

@@ -9,11 +9,11 @@ import MainLayout from "../layouts/MainLayout";
 export default function AppRoutes() {
   return (
     <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
-
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

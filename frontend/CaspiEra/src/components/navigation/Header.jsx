@@ -26,16 +26,27 @@ import CaspianEraLogo from "../../assets/CaspianEra_Logo.png";
 import LanguageSelector from "./LanguageSelector";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../features/auth/store/useAuthStore";
+import UserMenu from "../../features/auth/components/UserMenu";
 
 export default function Header() {
   const { t } = useTranslation();
 
-  const userId = useAuthStore((state) => state.user);
-  console.log(userId);
+  const { user, refreshToken, logout } = useAuthStore();
+  console.log(user, logout);
 
   const navigate = useNavigate();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleLogOut = async () => {
+    try {
+      await logout(refreshToken);
+
+      logout();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const navItems = [
     {
@@ -80,7 +91,7 @@ export default function Header() {
           boxShadow: "none",
           borderBottom: "none",
 
-          zIndex: (theme) => theme.zIndex.drawer + 1,
+          zIndex: (theme) => theme.zIndex.drawer ,
         }}
       >
         <Container
@@ -343,49 +354,53 @@ export default function Header() {
 
               {/* LOGIN / REGISTER */}
 
-              <Button
-                variant="contained"
-                onClick={() => navigate("/login")}
-                sx={{
-                  display: {
-                    xs: "none",
-                    lg: "inline-flex",
-                  },
+              {user ? (
+                <UserMenu user={user} onLogout={handleLogOut} />
+              ) : (
+                <Button
+                  variant="contained"
+                  onClick={() => navigate("/login")}
+                  sx={{
+                    display: {
+                      xs: "none",
+                      lg: "inline-flex",
+                    },
 
-                  ml: 0.7,
+                    ml: 0.7,
 
-                  px: {
-                    lg: 2,
-                    xl: 2.8,
-                  },
+                    px: {
+                      lg: 2,
+                      xl: 2.8,
+                    },
 
-                  py: 1.05,
+                    py: 1.05,
 
-                  bgcolor: "#FFFFFF",
-                  color: "#0B2F55",
+                    bgcolor: "#FFFFFF",
+                    color: "#0B2F55",
 
-                  borderRadius: "50px",
+                    borderRadius: "50px",
 
-                  fontSize: 12,
-                  fontWeight: 700,
+                    fontSize: 12,
+                    fontWeight: 700,
 
-                  whiteSpace: "nowrap",
+                    whiteSpace: "nowrap",
 
-                  textTransform: "none",
+                    textTransform: "none",
 
-                  boxShadow: "0 4px 15px rgba(0,0,0,.08)",
+                    boxShadow: "0 4px 15px rgba(0,0,0,.08)",
 
-                  "&:hover": {
-                    bgcolor: "#F8FAFC",
+                    "&:hover": {
+                      bgcolor: "#F8FAFC",
 
-                    transform: "translateY(-1px)",
+                      transform: "translateY(-1px)",
 
-                    boxShadow: "0 6px 18px rgba(0,0,0,.12)",
-                  },
-                }}
-              >
-                {t("navbar.loginRegister")}
-              </Button>
+                      boxShadow: "0 6px 18px rgba(0,0,0,.12)",
+                    },
+                  }}
+                >
+                  {t("navbar.loginRegister")}
+                </Button>
+              )}
 
               {/* MOBILE MENU */}
 
@@ -432,6 +447,7 @@ export default function Header() {
             maxWidth: 350,
 
             bgcolor: "#FFFFFF",
+            position: "relative",
           },
         }}
       >
@@ -446,6 +462,8 @@ export default function Header() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            position: "absalute",
+            zIndex: 10,
           }}
         >
           <Box
@@ -492,47 +510,6 @@ export default function Header() {
             <CloseRoundedIcon />
           </IconButton>
         </Box>
-
-        <Divider />
-
-        {/* MOBILE NAVIGATION */}
-
-        <List
-          sx={{
-            px: 1.5,
-            py: 2,
-          }}
-        >
-          {navItems.map((item) => (
-            <ListItemButton
-              key={item.key}
-              onClick={() => setMobileMenuOpen(false)}
-              sx={{
-                py: 1.3,
-                px: 2,
-
-                mb: 0.5,
-
-                borderRadius: 2,
-
-                color: "#334E68",
-
-                "&:hover": {
-                  bgcolor: "#F1F5F9",
-                  color: "#0B3B60",
-                },
-              }}
-            >
-              <ListItemText
-                primary={item.label}
-                primaryTypographyProps={{
-                  fontSize: 15,
-                  fontWeight: 500,
-                }}
-              />
-            </ListItemButton>
-          ))}
-        </List>
 
         <Divider />
 
@@ -597,6 +574,47 @@ export default function Header() {
             {t("navbar.loginRegister")}
           </Button>
         </Box>
+
+        {/* MOBILE NAVIGATION */}
+
+        <Divider />
+
+        <List
+          sx={{
+            px: 1.5,
+            py: 2,
+          }}
+        >
+          {navItems.map((item) => (
+            <ListItemButton
+              key={item.key}
+              onClick={() => setMobileMenuOpen(false)}
+              sx={{
+                py: 1.3,
+                px: 2,
+
+                mb: 0.5,
+
+                borderRadius: 2,
+
+                color: "#334E68",
+
+                "&:hover": {
+                  bgcolor: "#F1F5F9",
+                  color: "#0B3B60",
+                },
+              }}
+            >
+              <ListItemText
+                primary={item.label}
+                primaryTypographyProps={{
+                  fontSize: 15,
+                  fontWeight: 500,
+                }}
+              />
+            </ListItemButton>
+          ))}
+        </List>
       </Drawer>
     </>
   );

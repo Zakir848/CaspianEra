@@ -22,9 +22,10 @@ export default function HeroSearchBar() {
     destination: "",
     checkIn: "",
     checkOut: "",
-    guests: 2,
-    rooms: 1,
+    guests: 1,
   });
+
+  const [error, setError] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -40,209 +41,224 @@ export default function HeroSearchBar() {
 
     console.log("Hotel search:", search);
 
+    if (!search.destination.trim()) {
+      setError(t("searchRequired.destinationRequired"));
+      return;
+    }
+
+    if (!search.checkIn) {
+      setError(t("searchRequired.checkInRequired"));
+      return;
+    }
+
+    if (!search.checkOut) {
+      setError(t("searchRequired.checkOutRequired"));
+      return;
+    }
+
+    if (new Date(search.checkOut) <= new Date(search.checkIn)) {
+      setError(t("searchRequired.invalidDateRange"));
+      return;
+    }
+
+    if (search.guests < 1) {
+      setError(t("searchRequired.guestsRequired"));
+      return;
+    }
+
+    setError("");
     // Sonra backend search endpoint-ə göndərəcəyik.
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{
-        width: "100%",
-
-        display: "grid",
-
-        gridTemplateColumns: {
-          xs: "1fr",
-          sm: "1fr 1fr",
-          md: "1.6fr 1fr 1fr 1.2fr auto",
-        },
-
-        bgcolor: "#FFFFFF",
-
-        borderRadius: {
-          xs: 3,
-          md: 2.5,
-        },
-
-        overflow: "hidden",
-
-        boxShadow:
-          "0 18px 50px rgba(0,0,0,.20)",
-      }}
-    >
-      {/* =====================================
-          DESTINATION
-      ===================================== */}
-
-      <SearchField
-        icon={<LocationOnOutlinedIcon />}
-        label={t("search.destination")}
-      >
-        <TextField
-          name="destination"
-          value={search.destination}
-          onChange={handleChange}
-          placeholder={t(
-            "search.destinationPlaceholder"
-          )}
-          variant="standard"
-          fullWidth
-          InputProps={{
-            disableUnderline: true,
-          }}
-          sx={inputStyle}
-        />
-      </SearchField>
-
-      {/* =====================================
-          CHECK IN
-      ===================================== */}
-
-      <SearchField
-        icon={<CalendarMonthOutlinedIcon />}
-        label={t("search.checkIn")}
-      >
-        <TextField
-          name="checkIn"
-          type="date"
-          value={search.checkIn}
-          onChange={handleChange}
-          variant="standard"
-          fullWidth
-          InputProps={{
-            disableUnderline: true,
-          }}
-          inputProps={{
-            min: new Date()
-              .toISOString()
-              .split("T")[0],
-          }}
-          sx={inputStyle}
-        />
-      </SearchField>
-
-      {/* =====================================
-          CHECK OUT
-      ===================================== */}
-
-      <SearchField
-        icon={<CalendarMonthOutlinedIcon />}
-        label={t("search.checkOut")}
-      >
-        <TextField
-          name="checkOut"
-          type="date"
-          value={search.checkOut}
-          onChange={handleChange}
-          variant="standard"
-          fullWidth
-          disabled={!search.checkIn}
-          InputProps={{
-            disableUnderline: true,
-          }}
-          inputProps={{
-            min:
-              search.checkIn ||
-              new Date()
-                .toISOString()
-                .split("T")[0],
-          }}
-          sx={inputStyle}
-        />
-      </SearchField>
-
-      {/* =====================================
-          GUESTS / ROOMS
-      ===================================== */}
-
-      <SearchField
-        icon={<PeopleAltOutlinedIcon />}
-        label={t("search.guests")}
-      >
-        <TextField
-          select
-          name="guests"
-          value={search.guests}
-          onChange={handleChange}
-          variant="standard"
-          fullWidth
-          InputProps={{
-            disableUnderline: true,
-          }}
-          sx={inputStyle}
-        >
-          {[1, 2, 3, 4, 5, 6].map(
-            (count) => (
-              <MenuItem
-                key={count}
-                value={count}
-              >
-                {t("search.guestCount", {
-                  count,
-                })}
-              </MenuItem>
-            )
-          )}
-        </TextField>
-      </SearchField>
-
-      {/* =====================================
-          SEARCH BUTTON
-      ===================================== */}
-
+    <Box sx={{ width: "100%" }}>
       <Box
+        component="form"
+        onSubmit={handleSubmit}
         sx={{
-          p: {
-            xs: 1.2,
-            md: 1,
+          width: "100%",
+
+          display: "grid",
+
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm: "1fr 1fr",
+            md: "1.6fr 1fr 1fr 1.2fr auto",
           },
 
-          gridColumn: {
-            xs: "1 / -1",
-            sm: "1 / -1",
-            md: "auto",
+          bgcolor: "#FFFFFF",
+
+          borderRadius: {
+            xs: 3,
+            md: 2.5,
           },
 
-          display: "flex",
+          overflow: "hidden",
+
+          boxShadow: "0 18px 50px rgba(0,0,0,.20)",
         }}
       >
-        <Button
-          type="submit"
-          variant="contained"
-          startIcon={<SearchRoundedIcon />}
+        {/* DESTINATION */}
+        <SearchField
+          icon={<LocationOnOutlinedIcon />}
+          label={t("search.destination")}
+        >
+          <TextField
+            name="destination"
+            value={search.destination}
+            onChange={handleChange}
+            placeholder={t("search.destinationPlaceholder")}
+            variant="standard"
+            fullWidth
+            InputProps={{
+              disableUnderline: true,
+            }}
+            sx={inputStyle}
+          />
+        </SearchField>
+
+        {/* CHECK IN */}
+        <SearchField
+          icon={<CalendarMonthOutlinedIcon />}
+          label={t("search.checkIn")}
+        >
+          <TextField
+            name="checkIn"
+            type="date"
+            value={search.checkIn}
+            onChange={handleChange}
+            variant="standard"
+            fullWidth
+            InputProps={{
+              disableUnderline: true,
+            }}
+            inputProps={{
+              min: new Date().toISOString().split("T")[0],
+            }}
+            sx={inputStyle}
+          />
+        </SearchField>
+
+        {/* CHECK OUT */}
+        <SearchField
+          icon={<CalendarMonthOutlinedIcon />}
+          label={t("search.checkOut")}
+        >
+          <TextField
+            name="checkOut"
+            type="date"
+            value={search.checkOut}
+            onChange={handleChange}
+            variant="standard"
+            fullWidth
+            disabled={!search.checkIn}
+            InputProps={{
+              disableUnderline: true,
+            }}
+            inputProps={{
+              min: search.checkIn || new Date().toISOString().split("T")[0],
+            }}
+            sx={inputStyle}
+          />
+        </SearchField>
+
+        {/* GUESTS */}
+        <SearchField
+          icon={<PeopleAltOutlinedIcon />}
+          label={t("search.guests")}
+        >
+          <TextField
+            select
+            name="guests"
+            value={search.guests}
+            onChange={handleChange}
+            variant="standard"
+            fullWidth
+            InputProps={{
+              disableUnderline: true,
+            }}
+            sx={inputStyle}
+          >
+            {[1, 2, 3, 4, 5, 6].map((count) => (
+              <MenuItem key={count} value={count}>
+                {t("search.guestCount", { count })}
+              </MenuItem>
+            ))}
+          </TextField>
+        </SearchField>
+
+        {/* SEARCH */}
+        <Box
           sx={{
-            minWidth: {
-              xs: "100%",
-              md: 130,
+            p: {
+              xs: 1.2,
+              md: 1,
             },
 
-            minHeight: {
-              xs: 52,
-              md: 70,
+            gridColumn: {
+              xs: "1 / -1",
+              sm: "1 / -1",
+              md: "auto",
             },
 
-            px: 3,
-
-            bgcolor: "secondary.main",
-
-            color: "primary.dark",
-
-            borderRadius: 2,
-
-            fontSize: 14,
-            fontWeight: 800,
-
-            whiteSpace: "nowrap",
-
-            "&:hover": {
-              bgcolor: "secondary.dark",
-              color: "#FFFFFF",
-            },
+            display: "flex",
           }}
         >
-          {t("common.search")}
-        </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            startIcon={<SearchRoundedIcon />}
+            sx={{
+              minWidth: {
+                xs: "100%",
+                md: 130,
+              },
+
+              minHeight: {
+                xs: 52,
+                md: 70,
+              },
+
+              px: 3,
+
+              bgcolor: "secondary.main",
+              color: "primary.dark",
+
+              borderRadius: 2,
+
+              fontSize: 14,
+              fontWeight: 800,
+
+              whiteSpace: "nowrap",
+
+              "&:hover": {
+                bgcolor: "secondary.dark",
+                color: "#FFFFFF",
+              },
+            }}
+          >
+            {t("common.search")}
+          </Button>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          minHeight: 28,
+          mt: 0.7,
+          px: 1,
+        }}
+      >
+        {error && (
+          <Typography
+            sx={{
+              color: "#FFCDD2",
+              fontSize: 13,
+              fontWeight: 600,
+            }}
+          >
+            {error}
+          </Typography>
+        )}
       </Box>
     </Box>
   );
@@ -252,11 +268,7 @@ export default function HeroSearchBar() {
    SEARCH FIELD
 ========================================== */
 
-function SearchField({
-  icon,
-  label,
-  children,
-}) {
+function SearchField({ icon, label, children }) {
   return (
     <Box
       sx={{

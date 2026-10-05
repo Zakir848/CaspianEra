@@ -98,6 +98,14 @@
     "guestCount": "{{count}} guest(s)"
   },
 
+  "searchRequired": {
+    "destinationRequired": "Please select your destination.",
+    "checkInRequired": "Please select a check-in date.",
+    "checkOutRequired": "Please select a check-out date.",
+    "invalidDateRange": "The check-out date must be after the check-in date.",
+    "guestsRequired": "At least 1 guest must be selected."
+  },
+
   "home": {
     "popularCities": "Popular Cities",
     "featuredHotels": "Featured Hotels"
