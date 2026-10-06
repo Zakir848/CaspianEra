@@ -38,6 +38,10 @@ public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
         builder.HasIndex(x => x.UserName)
             .IsUnique();
 
+        builder.Property(x => x.Role)
+            .IsRequired()
+            .HasMaxLength(100);
+
         builder.HasQueryFilter(x => !x.IsDeleted);
     }
 

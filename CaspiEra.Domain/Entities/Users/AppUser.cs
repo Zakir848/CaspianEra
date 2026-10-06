@@ -14,6 +14,8 @@ public class AppUser : IdentityUser<Guid>
     public string? CoverImageUrl { get; set; }
     public string? ProfileImageUrl { get; set; }
 
+    public string Role { get; set; } = null!;
+
     public DateTime? DateOfBirth { get; set; }
 
     public bool IsOnline { get; set; }

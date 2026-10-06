@@ -7,10 +7,13 @@ import Loading from "../../../components/common/Loading";
 import ErrorMessage from "../../../components/common/ErrorMessage";
 import EmptyState from "../../../components/common/EmptyState";
 import useCities from "../hooks/useCities";
-import CityCard from "./cityCard";
+import CityCard from "./CityCard";
+import { useNavigate } from "react-router-dom";
 
-export default function PopularCities({ onCityClick, onViewAll }) {
+export default function PopularCities() {
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
 
   const { data, isLoading, isError, error, refetch } = useCities({
     page: 1,
@@ -99,7 +102,7 @@ export default function PopularCities({ onCityClick, onViewAll }) {
           </Box>
 
           <Button
-            onClick={onViewAll}
+            onClick={() => navigate("/cities")}
             endIcon={<ArrowForwardRoundedIcon />}
             sx={{
               color: "#0B3B60",
@@ -132,7 +135,10 @@ export default function PopularCities({ onCityClick, onViewAll }) {
           }}
         >
           {cities.map((city) => (
-            <CityCard key={city.id} city={city} onClick={onCityClick} />
+            <CityCard
+              key={city.cityId}
+              city={city}              
+            />
           ))}
         </Box>
       </Container>

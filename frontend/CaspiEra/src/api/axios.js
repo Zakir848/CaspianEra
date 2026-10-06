@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "../features/auth/store/useAuthStore";
 
 const api = axios.create({
-  baseURL: `https://localhost:7006/api`,
+  baseURL: `http://-/api`,
 });
 
 api.interceptors.request.use((config) => {
@@ -56,7 +56,7 @@ api.interceptors.response.use(
         }
 
         const response = await axios.post(
-          "https://localhost:7006/api/auth/refresh",
+          "http://192.168.31.183:5000/api/auth/refresh",
           {
             refreshToken,
           },
@@ -69,7 +69,9 @@ api.interceptors.response.use(
           email,
           firstName,
           lastName,
+          role,
         } = response.data;
+        console.log(response.data);
 
         useAuthStore.getState().setAuth({
           accessToken,
@@ -79,6 +81,7 @@ api.interceptors.response.use(
             email,
             firstName,
             lastName,
+            role,
           },
         });
 

@@ -101,6 +101,7 @@ namespace CaspianEra.API.Controllers
             var existingEmail =
                 await _userManager.FindByEmailAsync(request.Email);
 
+
             if (existingEmail is not null)
             {
                 return BadRequest(new
@@ -116,7 +117,8 @@ namespace CaspianEra.API.Controllers
                 LastName = request.LastName,
                 Email = request.Email,
                 UserName = request.Email,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                Role = "User"   
             };
 
             var result = await _userManager.CreateAsync(

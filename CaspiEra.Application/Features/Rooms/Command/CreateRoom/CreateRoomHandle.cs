@@ -14,8 +14,9 @@ public class CreateRoomHandle : IRequestHandler<CreateRoomCommand, RoomDto?>
     private readonly IFileStorageService _fileStorageService;
     private readonly IMapper _mapper;
 
-    public CreateRoomHandle(IFileStorageService fileStorageService, IMapper mapper)
+    public CreateRoomHandle(IRoomRepository repository, IFileStorageService fileStorageService, IMapper mapper)
     {
+        _repository = repository;
         _fileStorageService = fileStorageService;
         _mapper = mapper;
     }

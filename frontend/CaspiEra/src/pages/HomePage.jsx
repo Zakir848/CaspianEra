@@ -9,56 +9,10 @@ import RightAdBanner from "../components/home/RightAdBanner";
 
 import PopularCities from "../features/cities/components/PopularCities";
 
-import hero1 from "../assets/baku-hero-light.png";
-import hero2 from "../assets/baku-hero.png";
+// import hero1 from "../assets/baku-hero-light.png";
+import hero1 from "../assets/baku-hero.png";
 
 export default function HomePage() {
-  const [activeSlide, setActiveSlide] = useState(0);
-
-  const slides = [
-    {
-      id: 1,
-      image: hero1,
-      slogan: "SƏYAHƏTİNİZ BURADAN BAŞLAYIR",
-      title: "Xüsusi anları",
-      highlightedTitle: "CaspianEra ilə yaşayın",
-      description:
-        "Otellərdən xüsusi paketlərə qədər səyahətiniz üçün lazım olan hər şeyi bir yerdə tapın.",
-    },
-    {
-      id: 2,
-      image: hero2,
-      slogan: "YENİ MƏKANLAR KƏŞF EDİN",
-      title: "Yeni hekayələrə",
-      highlightedTitle: "səyahət edin",
-      description:
-        "Azərbaycanın müxtəlif bölgələrində sizi gözləyən unikal məkanları və təcrübələri kəşf edin.",
-    },
-  ];
-
-  const currentSlide = slides[activeSlide];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveSlide((current) =>
-        current === slides.length - 1 ? 0 : current + 1
-      );
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, [slides.length]);
-
-  const handleNext = () => {
-    setActiveSlide((current) =>
-      current === slides.length - 1 ? 0 : current + 1
-    );
-  };
-
-  const handlePrevious = () => {
-    setActiveSlide((current) =>
-      current === 0 ? slides.length - 1 : current - 1
-    );
-  };
 
   return (
     <Box
@@ -94,49 +48,28 @@ export default function HomePage() {
             BACKGROUND SLIDES
         ===================================== */}
 
-        {slides.map((slide, index) => (
-          <Box
-            key={slide.id}
-            sx={{
-              position: "absolute",
-              inset: 0,
+        <Box
+          sx={{
+            position: "absolute",
+            inset: 0,
 
-              width: "100%",
-              height: "100%",
+            width: "100%",
+            height: "100%",
 
-              backgroundImage: `url(${slide.image})`,
+            backgroundImage: `url(${hero1})`,
 
-              backgroundSize: "cover",
+            backgroundSize: "cover",
 
-              backgroundPosition: {
-                xs: "58% center",
-                sm: "55% center",
-                md: "center center",
-              },
+            backgroundPosition: {
+              xs: "58% center",
+              sm: "55% center",
+              md: "center center",
+            },
 
-              backgroundRepeat: "no-repeat",
-
-              /*
-               * active slide = ekranda
-               * sonrakılar = sağ tərəfdə
-               * əvvəlkilər = sol tərəfdə
-               */
-              transform:
-                index === activeSlide
-                  ? "translateX(0%)"
-                  : index < activeSlide
-                    ? "translateX(-100%)"
-                    : "translateX(100%)",
-
-              transition:
-                "transform 900ms cubic-bezier(0.77, 0, 0.175, 1)",
-
-              willChange: "transform",
-
-              zIndex: 0,
-            }}
-          />
-        ))}
+            backgroundRepeat: "no-repeat",
+            zIndex: 0,
+          }}
+        />
 
         {/* =====================================
             DARK OVERLAY
@@ -228,13 +161,7 @@ export default function HomePage() {
 
             {/* CENTER HERO */}
 
-            <HeroSection
-              slide={currentSlide}
-              activeSlide={activeSlide}
-              totalSlides={slides.length}
-              onNext={handleNext}
-              onPrevious={handlePrevious}
-            />
+            <HeroSection />
 
             {/* RIGHT AD */}
 

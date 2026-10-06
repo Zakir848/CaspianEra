@@ -20,6 +20,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Linq;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +35,7 @@ builder.Services.AddControllers()
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+        
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(
@@ -191,12 +193,14 @@ builder.Services.AddAuthorization();
 // React frontend üçün
 // =========================
 
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactClient", policy =>
     {
         policy
-            .WithOrigins("http://localhost:5173")
+            .WithOrigins("http://localhost:5173", "http://192.168.31.183:5173")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -237,6 +241,27 @@ using (var scope = app.Services.CreateScope())
             }
         }
     }
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+    var adminEmail = "AppAdmin@gmail.com";
+
+    var admin = await userManager.FindByEmailAsync(adminEmail);
+
+    if (admin == null)
+    {
+        admin = new AppUser
+        {
+            FirstName = "System Admin",
+            LastName = "Caspian Era",
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true,
+            Role = "AppAdmin"
+        };
+
+        await userManager.CreateAsync(admin, "Admin_2026");
+    }
 }
 
 // Configure the HTTP request pipeline.
@@ -246,7 +271,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseCors("ReactClient");
 
@@ -256,3 +281,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

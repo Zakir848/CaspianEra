@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -34,6 +34,7 @@ export default function LoginPage() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const [form, setForm] = useState({
     email: "",
@@ -46,13 +47,19 @@ export default function LoginPage() {
       ...current,
       [name]: value,
     }));
+    setError("");
   };
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!form.email) {
-      setError("Login");
+    if (!form.email.trim() || !form.password) {
+      setError(t("login.requiredFields"));
+      return;
+    }
+
+    if (!e.currentTarget.checkValidity()) {
+      e.currentTarget.reportValidity();
       return;
     }
 
@@ -60,22 +67,32 @@ export default function LoginPage() {
       setLoading(true);
       setError("");
 
-      const result = await login(form);
+      const result = await login({ ...form, email: form.email.trim() });
 
       setAuth({
-        accessToken: result.userId,
+        accessToken: result.accessToken,
         refreshToken: result.refreshToken,
         user: {
+          userId: result.userId,
           email: result.email,
+          firstName: result.firstName,
+          lastName: result.lastName,
+          role: result.role,
         },
+        rememberMe,
       });
-      navigate("/");
+
+      if (result.role === "AppAdmin") {
+        navigate("/AppAdmin");
+      } else {
+        navigate("/");
+      }
     } catch (err) {
       console.log(err.response?.data);
-      
+
       const data = err.response?.data;
       console.log(data);
-        
+
       if (data?.errors) {
         setError(data.errors.join(" "));
         console.log(data?.errors.join(" "));
@@ -83,7 +100,6 @@ export default function LoginPage() {
         console.log(data?.message);
         setError(data?.message || "Login failed.");
       }
-      
     } finally {
       setLoading(false);
     }
@@ -299,6 +315,7 @@ export default function LoginPage() {
               flexDirection: "column",
               gap: 2.2,
             }}
+            noValidate
             onSubmit={handleSubmit}
           >
             <TextField
@@ -306,10 +323,12 @@ export default function LoginPage() {
               name="email"
               value={form.email}
               onChange={handleChange}
+              required
               label={t("auth.email")}
               type="email"
               autoComplete="email"
               slotProps={{
+                htmlInput: { "aria-required": true },
                 input: {
                   startAdornment: (
                     <InputAdornment position="start">
@@ -334,6 +353,7 @@ export default function LoginPage() {
               name="password"
               value={form.password}
               onChange={handleChange}
+              required
               label={t("auth.password")}
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
@@ -367,7 +387,14 @@ export default function LoginPage() {
                 },
               }}
             />
-            {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
+            {error && (
+              <Typography
+                role="alert"
+                sx={{ color: "error.main", fontSize: 14 }}
+              >
+                {error}
+              </Typography>
+            )}
 
             <Box
               sx={{
@@ -385,7 +412,13 @@ export default function LoginPage() {
               }}
             >
               <FormControlLabel
-                control={<Checkbox size="small" />}
+                control={
+                  <Checkbox
+                    size="small"
+                    checked={rememberMe}
+                    onChange={(event) => setRememberMe(event.target.checked)}
+                  />
+                }
                 label={
                   <Typography
                     sx={{

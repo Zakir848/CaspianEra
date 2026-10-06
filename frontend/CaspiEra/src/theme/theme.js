@@ -4,6 +4,35 @@ const theme = createTheme({
   palette: {
     mode: "light",
 
+    admin: {
+      navy: "#10263B",
+      navyBorder: "#233B52",
+      navyDivider: "#31485E",
+      blue: "#397FEA",
+      blueLight: "#8DB7FF",
+      blueSoft: "#EAF1FE",
+      blueBorder: "#D8E5FC",
+      green: "#229B71",
+      greenSoft: "#E8F6F0",
+      orange: "#D9872F",
+      orangeSoft: "#FFF3E5",
+      purple: "#8067D8",
+      purpleSoft: "#F0EDFF",
+      background: "#F2F5F9",
+      surface: "#FFFFFF",
+      subtleSurface: "#F6F8FB",
+      text: "#172A40",
+      muted: "#687A90",
+      border: "#E2E8F0",
+      white: "#FFFFFF",
+      whiteMuted: "rgba(255,255,255,.7)",
+      whiteSecondary: "rgba(255,255,255,.72)",
+      whiteBorder: "rgba(255,255,255,.32)",
+      whiteHover: "rgba(255,255,255,.1)",
+      error: "#B84040",
+      errorSoft: "#FFF1F0",
+    },
+
     // Dərin Xəzər mavisi — tam navy deyil
     primary: {
       main: "#183B4A",

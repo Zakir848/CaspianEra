@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import {
   AppBar,
+  Avatar,
   Box,
   Button,
   Container,
@@ -20,19 +21,21 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 import CaspianEraLogo from "../../assets/CaspianEra_Logo.png";
 
 import LanguageSelector from "./LanguageSelector";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../features/auth/store/useAuthStore";
-import UserMenu from "../../features/auth/components/UserMenu";
+import { logout as logoutRequest } from "../../features/auth/api/authApi";
+import UserMenuForPc from "../../features/auth/components/UserMenuForPc";
 
 export default function Header() {
   const { t } = useTranslation();
 
-  const { user, refreshToken, logout } = useAuthStore();
-  console.log(user, logout);
+  const { user, refreshToken, logout: clearAuth } = useAuthStore();
+  console.log(user);
 
   const navigate = useNavigate();
 
@@ -40,11 +43,14 @@ export default function Header() {
 
   const handleLogOut = async () => {
     try {
-      await logout(refreshToken);
-
-      logout();
+      if (refreshToken) {
+        await logoutRequest(refreshToken);
+      }
     } catch (error) {
       console.error(error);
+    } finally {
+      clearAuth();
+      setMobileMenuOpen(false);
     }
   };
 
@@ -91,7 +97,7 @@ export default function Header() {
           boxShadow: "none",
           borderBottom: "none",
 
-          zIndex: (theme) => theme.zIndex.drawer ,
+          zIndex: (theme) => theme.zIndex.drawer,
         }}
       >
         <Container
@@ -130,7 +136,9 @@ export default function Header() {
                   xs: "auto",
                   lg: 4,
                 },
+                userSelect: "none",
               }}
+              onClick={() => navigate("/")}
             >
               <Box
                 component="img"
@@ -145,7 +153,9 @@ export default function Header() {
 
                   height: "auto",
                   objectFit: "contain",
-
+                  userSelect: "none",
+                  WebkitUserDrag: "none",
+                  pointerEvents: "none",
                   mr: 1.2,
                 }}
               />
@@ -328,7 +338,7 @@ export default function Header() {
 
               {/* LANGUAGE */}
 
-              <LanguageSelector />
+              <LanguageSelector variant="contrast" />
 
               {/* WISHLIST */}
 
@@ -355,7 +365,9 @@ export default function Header() {
               {/* LOGIN / REGISTER */}
 
               {user ? (
-                <UserMenu user={user} onLogout={handleLogOut} />
+                <Box sx={{ display: { xs: "none", lg: "block" } }}>
+                  <UserMenuForPc user={user} onLogout={handleLogOut} />
+                </Box>
               ) : (
                 <Button
                   variant="contained"
@@ -520,6 +532,52 @@ export default function Header() {
             p: 2.5,
           }}
         >
+          {user && (
+            <Box
+              component="section"
+              sx={{
+                mb: 2,
+                p: 1.75,
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                bgcolor: "background.default",
+                border: "1px solid",
+                borderColor: "divider",
+                borderRadius: 1,
+              }}
+            >
+              <Avatar
+                src={user.profileImageUrl || undefined}
+                alt={`${user.firstName || ""} ${user.lastName || ""}`.trim()}
+                sx={{
+                  width: 42,
+                  height: 42,
+                  bgcolor: "secondary.main",
+                  color: "primary.dark",
+                  fontWeight: 700,
+                }}
+              >
+                {(user.firstName || user.email || "U").charAt(0).toUpperCase()}
+              </Avatar>
+              <Box sx={{ minWidth: 0 }}>
+                <Typography sx={{ fontWeight: 700, lineHeight: 1.3 }}>
+                  {[user.firstName, user.lastName].filter(Boolean).join(" ") ||
+                    user.email}
+                </Typography>
+                {user.email && (
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ overflowWrap: "anywhere" }}
+                  >
+                    {user.email}
+                  </Typography>
+                )}
+              </Box>
+            </Box>
+          )}
+
           <Box
             sx={{
               mb: 2,
@@ -531,48 +589,74 @@ export default function Header() {
             <LanguageSelector />
           </Box>
 
-          <Button
-            fullWidth
-            variant="outlined"
-            startIcon={<FavoriteRoundedIcon />}
-            sx={{
-              mb: 1.5,
-              py: 1.2,
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <Button
+              fullWidth
+              variant="outlined"
+              startIcon={<FavoriteRoundedIcon />}
+              sx={{
+                minWidth: 0,
+                py: 1.15,
+                px: 1,
+                borderColor: "#CBD5E1",
+                color: "#334E68",
+                borderRadius: 2.5,
+                fontSize: 13,
+                whiteSpace: "nowrap",
+                textTransform: "none",
+                "& .MuiButton-startIcon": { mr: 0.5 },
+              }}
+            >
+              {t("navbar.wishlist")}
+            </Button>
+            {user && (
+              <Button
+                fullWidth
+                color="error"
+                variant="outlined"
+                startIcon={<LogoutRoundedIcon />}
+                onClick={handleLogOut}
+                sx={{
+                  minWidth: 0,
+                  py: 1.15,
+                  px: 1,
+                  borderRadius: 2.5,
+                  fontSize: 13,
+                  whiteSpace: "nowrap",
+                  textTransform: "none",
+                  "& .MuiButton-startIcon": { mr: 0.5 },
+                }}
+              >
+                {t("navbar.logout")}
+              </Button>
+            )}
+          </Box>
+          {!user && (
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={() => navigate("/login")}
+              sx={{
+                py: 1.3,
+                mt: 1.5,
 
-              borderColor: "#CBD5E1",
-              color: "#334E68",
+                bgcolor: "#0B3B60",
 
-              borderRadius: 2.5,
+                borderRadius: 2.5,
 
-              textTransform: "none",
-            }}
-          >
-            Wishlist
-          </Button>
+                textTransform: "none",
 
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={() => navigate("/login")}
-            sx={{
-              py: 1.3,
-
-              bgcolor: "#0B3B60",
-
-              borderRadius: 2.5,
-
-              textTransform: "none",
-
-              boxShadow: "none",
-
-              "&:hover": {
-                bgcolor: "#072D49",
                 boxShadow: "none",
-              },
-            }}
-          >
-            {t("navbar.loginRegister")}
-          </Button>
+
+                "&:hover": {
+                  bgcolor: "#072D49",
+                  boxShadow: "none",
+                },
+              }}
+            >
+              {t("navbar.loginRegister")}
+            </Button>
+          )}
         </Box>
 
         {/* MOBILE NAVIGATION */}

@@ -4,14 +4,17 @@ import {
   Button,
   IconButton,
   InputAdornment,
+  LinearProgress,
   TextField,
   Typography,
 } from "@mui/material";
 
 import {
+  CheckCircleRounded,
   EmailOutlined,
   LockOutlined,
   Person2Outlined,
+  RadioButtonUncheckedRounded,
   Visibility,
   VisibilityOff,
 } from "@mui/icons-material";
@@ -42,6 +45,33 @@ export default function RegisterPage() {
     confirmPassword: "",
   });
 
+  const passwordChecks = [
+    { id: "uppercase", example: "A", valid: /[A-Z]/.test(form.password) },
+    { id: "lowercase", example: "a", valid: /[a-z]/.test(form.password) },
+    { id: "number", example: "7", valid: /\d/.test(form.password) },
+    {
+      id: "special",
+      example: "!@#",
+      valid: /[^A-Za-z0-9]/.test(form.password),
+    },
+    {
+      id: "maxLength",
+      valid: form.password.length > 0 && form.password.length <= 20,
+    },
+    {
+      id: "minLength",
+      valid: form.password.length >= 8,
+    },
+  ];
+
+  const completedPasswordChecks = passwordChecks.filter(
+    (check) => check.valid,
+  ).length;
+
+  const hasPassword = form.password.length > 0;
+
+  const passwordIsValid = completedPasswordChecks === passwordChecks.length;
+
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -49,12 +79,36 @@ export default function RegisterPage() {
       ...current,
       [name]: value,
     }));
+    setError("");
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     console.log(form);
+
+    if (!form.password || !form.confirmPassword) {
+      setError(t("register.requiredPasswords"));
+      return;
+    }
+
+    if (form.password.length < 8) {
+      setError(t("register.passwordMinLength"));
+      return;
+    }
+
+    if (form.password.length > 20) {
+      setError(t("register.passwordMaxLength"));
+      return;
+    }
+
+    const passwordPattern =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,20}$/;
+
+    if (!passwordPattern.test(form.password)) {
+      setError(t("register.passwordRequirements"));
+      return;
+    }
 
     if (form.password !== form.confirmPassword) {
       setError(t("register.passwordMismatch"));
@@ -68,14 +122,14 @@ export default function RegisterPage() {
       const result = await register(form);
 
       setAuth({
-        accessToken: result.userId,
+        accessToken: result.accessToken,
         refreshToken: result.refreshToken,
         user: {
           userId: result.userId,
           email: result.email,
           firstName: result.firstName,
           lastName: result.lastName,
-          password: result.password,
+          role: result.role,
         },
       });
       navigate("/");
@@ -325,8 +379,10 @@ export default function RegisterPage() {
               label={t("auth.password")}
               value={form.password}
               onChange={handleChange}
+              required
               type={showPassword ? "text" : "password"}
               slotProps={{
+                htmlInput: { minLength: 8, maxLength: 20 },
                 input: {
                   startAdornment: (
                     <InputAdornment position="start">
@@ -354,7 +410,9 @@ export default function RegisterPage() {
               label={t("auth.confirmPassword")}
               value={form.confirmPassword}
               onChange={handleChange}
+              required
               type={showConfirmPassword ? "text" : "password"}
+              inputProps={{ maxLength: 20 }}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -374,6 +432,127 @@ export default function RegisterPage() {
                 },
               }}
             />
+
+            <Box
+              component="section"
+              aria-label={t("register.passwordChecklist")}
+              sx={{
+                mt: -1,
+                p: { xs: 1.5, sm: 1.75 },
+                bgcolor: !hasPassword
+                  ? "rgba(24,59,74,.035)"
+                  : passwordIsValid
+                    ? "rgba(86,112,93,.12)"
+                    : "rgba(168,77,67,.09)",
+                border: "1px solid",
+                borderColor: !hasPassword
+                  ? "divider"
+                  : passwordIsValid
+                    ? "success.main"
+                    : "error.main",
+                borderRadius: 1,
+                transition: "background-color .2s ease, border-color .2s ease",
+              }}
+            >
+              <Box
+                sx={{
+                  mb: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 1,
+                }}
+              >
+                <Typography sx={{ fontSize: 13, fontWeight: 700 }}>
+                  {t("register.passwordChecklist")}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {t("register.passwordProgress", {
+                    completed: completedPasswordChecks,
+                    total: passwordChecks.length,
+                  })}
+                </Typography>
+              </Box>
+              <LinearProgress
+                variant="determinate"
+                value={(completedPasswordChecks / passwordChecks.length) * 100}
+                color={
+                  passwordIsValid
+                    ? "success"
+                    : hasPassword
+                      ? "error"
+                      : "primary"
+                }
+                sx={{
+                  mb: 1.5,
+                  height: 5,
+                  borderRadius: 3,
+                  bgcolor: "rgba(24,59,74,.1)",
+                }}
+              />
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "1fr",
+                    sm: "repeat(2, minmax(0, 1fr))",
+                  },
+                  columnGap: 2,
+                  rowGap: 0.75,
+                }}
+              >
+                {passwordChecks.map((check) => (
+                  <Box
+                    key={check.id}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.65,
+                      px: 0.75,
+                      py: 0.65,
+                      borderRadius: 0.75,
+                      color: check.valid
+                        ? "success.main"
+                        : hasPassword
+                          ? "error.main"
+                          : "text.secondary",
+                      bgcolor: check.valid
+                        ? "rgba(86,112,93,.1)"
+                        : hasPassword
+                          ? "rgba(168,77,67,.07)"
+                          : "rgba(24,59,74,.025)",
+                    }}
+                  >
+                    {check.valid ? (
+                      <CheckCircleRounded sx={{ fontSize: 16 }} />
+                    ) : (
+                      <RadioButtonUncheckedRounded sx={{ fontSize: 16 }} />
+                    )}
+                    {check.example && (
+                      <Typography
+                        component="code"
+                        sx={{
+                          minWidth: 34,
+                          px: 0.5,
+                          py: 0.15,
+                          bgcolor: "background.paper",
+                          borderRadius: 0.5,
+                          color: "primary.dark",
+                          fontSize: 11,
+                          fontWeight: 700,
+                          textAlign: "center",
+                        }}
+                      >
+                        {check.example}
+                      </Typography>
+                    )}
+                    <Typography sx={{ fontSize: 12, lineHeight: 1.4 }}>
+                      {t(`register.passwordRules.${check.id}`)}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
 
             <Typography sx={{ color: "red" }}>{error}</Typography>
 

@@ -11,6 +11,8 @@
     "title": "Xoş gəlmisiniz",
     "subtitle": "CaspianEra hesabınıza daxil olun",
     "button": "Daxil ol",
+    "requiredFields": "E-poçt və şifrə xanaları doldurulmalıdır.",
+    "passwordNotice": "Güclü şifrə tələbləri yalnız yeni hesab yaradarkən yoxlanılır.",
     "noAccount": "Hesabınız yoxdur?",
     "signUp": "Qeydiyyatdan Keç",
     "rememberMe": "Məni xatırla",
@@ -23,7 +25,21 @@
     "button": "Qeydiyyatdan keç",
     "hasAccount": "Artıq hesabınız var?",
     "signIn": "Daxil ol",
-    "passwordMismatch": "Şifrə təsdiq olunmadı"
+    "requiredPasswords": "Şifrə və təsdiq xanası doldurulmalıdır.",
+    "passwordMismatch": "Şifrə təsdiq olunmadı",
+    "passwordMinLength": "Şifrə ən azı 8 simvol olmalıdır.",
+    "passwordRequirements": "Şifrə böyük və kiçik hərf, rəqəm və xüsusi simvol ehtiva etməlidir.",
+    "passwordMaxLength": "Şifrə ən çox 20 simvol ola bilər.",
+    "passwordChecklist": "Şifrə tələbləri",
+    "passwordProgress": "{{completed}}/{{total}} tamamlandı",
+    "passwordRules": {
+      "uppercase": "Böyük hərf",
+      "lowercase": "Kiçik hərf",
+      "number": "Rəqəm",
+      "special": "Xüsusi simvol",
+      "minLength": "Ən azı 8 simvol",
+      "maxLength": "Ən çox 20 simvol"
+    }
   },
 
   "common": {
@@ -54,9 +70,12 @@
     "home": "Ana səhifə",
     "hotels": "Otellər",
     "cities": "Şəhərlər",
+    "wishlist": "Seçilmişlər",
+    "logout": "Çıxış et",
     "experiences": "Təcrübələr",
     "about": "Haqqımızda",
-    "loginRegister": "Daxil ol / Qeydiyyat"
+    "loginRegister": "Daxil ol / Qeydiyyat",
+    "business": "Biznes üçün"
   },
 
   "hero": {
@@ -90,6 +109,7 @@
   },
 
   "search": {
+    "noCities": "Şəhər yoxdur",
     "destination": "Məkan",
     "destinationPlaceholder": "Hara gedirsiniz?",
     "checkIn": "Giriş",
@@ -113,12 +133,37 @@
   },
 
   "cities": {
+    "title": "Azərbaycanın şəhərləri",
     "popularDescription": "Azərbaycanın ən çox ziyarət edilən şəhərlərini kəşf edin",
+    "searchPlaceholder": "Şəhər axtar",
+    "resultCount": "{{count}} şəhər",
+    "noSearchResults": "Axtarışa uyğun şəhər tapılmadı",
     "emptyTitle": "Şəhər tapılmadı",
     "emptyDescription": "Hazırda göstəriləcək şəhər mövcud deyil.",
     "loadError": "Şəhərləri yükləmək mümkün olmadı.",
     "azerbaijan": "Azərbaycan",
     "hotelCount": "{{count}} otel"
+  },
+
+  "citiesName": {
+    "Baku": "Bakı",
+    "Gabala": "Qəbələ",
+    "Sheki": "Şəki",
+    "Quba": "Quba",
+    "Qusar": "Qusar",
+    "Ganja": "Gəncə",
+    "Shamakhi": "Şamaxı",
+    "Ismayilli": "İsmayıllı",
+    "Lankaran": "Lənkəran",
+    "Shusha": "Şuşa",
+    "Nakhchivan": "Naxçıvan",
+    "Goygol": "Göygöl",
+    "Zagatala": "Zaqatala",
+    "Gakh": "Qax",
+    "Lerik": "Lerik",
+    "Naftalan": "Naftalan",
+    "Shamkir": "Şəmkir",
+    "Mingachevir": "Mingəçevir"
   },
 
   "ads": {
@@ -150,5 +195,35 @@
     "terms": "İstifadə şərtləri",
     "privacy": "Məxfilik siyasəti",
     "rights": "Bütün hüquqlar qorunur."
+  },
+
+  "admin": {
+    "workspace": "İdarəetmə paneli",
+    "navigation": "Admin naviqasiyası",
+    "metricsLabel": "Əsas göstəricilər",
+    "recentReservations": "Son rezervasiyalar",
+    "latestActivity": "Ən son fəaliyyət",
+    "emptyTitle": "Hələ məlumat yoxdur",
+    "serverError": "Server xətası baş verdi. Bir az sonra yenidən cəhd edin.",
+    "sections": {
+      "overview": "İcmal",
+      "reservations": "Rezervasiyalar",
+      "hotels": "Otellər",
+      "cities": "Şəhərlər",
+      "customers": "İstifadəçilər",
+      "reviews": "Rəylər"
+    },
+    "metrics": {
+      "reservations": "Rezervasiyaların sayı",
+      "revenue": "Ümumi gəlir",
+      "hotels": "Otellər",
+      "customers": "İstifadəçilər"
+    },
+    "columns": {
+      "reservation": "Rezervasiya",
+      "guest": "Qonaq",
+      "property": "Otel",
+      "amount": "Məbləğ"
+    }
   }
 }

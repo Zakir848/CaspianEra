@@ -43,6 +43,7 @@ public class AuthHelper : IAuthHelper
             Email = user.Email!,
             FirstName = user.FirstName,
             LastName = user.LastName,
+            Role = user.Role,
 
             AccessToken = accessToken.Token,
             AccessTokenExpiresAt = accessToken.ExpiresAt,

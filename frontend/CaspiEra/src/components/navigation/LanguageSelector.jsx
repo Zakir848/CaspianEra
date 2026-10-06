@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Button, Menu, MenuItem, ListItemText, Box } from "@mui/material";
+import {
+  Button,
+  Menu,
+  MenuItem,
+  ListItemText,
+  Box,
+  Typography,
+} from "@mui/material";
 
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 
@@ -26,7 +33,7 @@ const languages = [
   },
 ];
 
-export default function LanguageSelector() {
+export default function LanguageSelector({ variant = "default" }) {
   const { i18n } = useTranslation();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -57,10 +64,22 @@ export default function LanguageSelector() {
         onClick={handleOpen}
         endIcon={<KeyboardArrowDownRoundedIcon />}
         sx={{
-          color: "#102A43",
+          color:
+            variant === "contrast"
+              ? "primary.contrastText"
+              : "primary.main",
           textTransform: "none",
           fontWeight: 600,
           minWidth: 80,
+          "&:hover": {
+            bgcolor:
+              variant === "contrast" ? "rgba(255,255,255,.12)" : "action.hover",
+          },
+          "&:focus-visible": {
+            outline: "2px solid",
+            outlineColor:
+              variant === "contrast" ? "secondary.light" : "secondary.dark",
+          },
         }}
       >
         <Box
@@ -77,7 +96,9 @@ export default function LanguageSelector() {
             mr: 1,
           }}
         />{" "}
-        {currentLanguage.short}
+        <Typography sx={{ color: "inherit", fontSize: 14, fontWeight: 600 }}>
+          {currentLanguage.short}
+        </Typography>
       </Button>
 
       <Menu
@@ -89,6 +110,10 @@ export default function LanguageSelector() {
             mt: 1,
             minWidth: 180,
             borderRadius: 2.5,
+            bgcolor: "background.paper",
+            color: "text.primary",
+            border: "1px solid",
+            borderColor: "divider",
           },
         }}
       >
@@ -119,7 +144,9 @@ export default function LanguageSelector() {
                   flexShrink: 0,
                 }}
               />{" "}
-              {language.label}
+              <Typography sx={{ fontSize: 14, fontWeight: 600 }}>
+                {language.label}
+              </Typography>
             </Box>
           </MenuItem>
         ))}

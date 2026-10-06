@@ -11,6 +11,8 @@
     "title": "С возвращением",
     "subtitle": "Войдите в свой аккаунт CaspianEra",
     "button": "Войти",
+    "requiredFields": "Укажите электронную почту и пароль.",
+    "passwordNotice": "Требования к сложному паролю проверяются только при создании аккаунта.",
     "noAccount": "Нет аккаунта?",
     "signUp": "Зарегистрироваться",
     "rememberMe": "Запомнить меня",
@@ -22,7 +24,22 @@
     "subtitle": "Начните планировать путешествие с CaspianEra",
     "button": "Зарегистрироваться",
     "hasAccount": "Уже есть аккаунт?",
-    "signIn": "Войти"
+    "signIn": "Войти",
+    "requiredPasswords": "Введите пароль и его подтверждение.",
+    "passwordMismatch": "Пароли не совпадают.",
+    "passwordMinLength": "Пароль должен содержать не менее 8 символов.",
+    "passwordRequirements": "Пароль должен содержать заглавную и строчную буквы, цифру и специальный символ.",
+    "passwordMaxLength": "Пароль может содержать не более 20 символов.",
+    "passwordChecklist": "Требования к паролю",
+    "passwordProgress": "Выполнено: {{completed}}/{{total}}",
+    "passwordRules": {
+      "uppercase": "Заглавная буква",
+      "lowercase": "Строчная буква",
+      "number": "Цифра",
+      "special": "Специальный символ",
+      "minLength": "Не менее 8 символов",
+      "maxLength": "Не более 20 символов"
+    }
   },
 
   "common": {
@@ -53,9 +70,12 @@
     "home": "Главная",
     "hotels": "Отели",
     "cities": "Города",
+    "wishlist": "Избранное",
+    "logout": "Выйти",
     "experiences": "Впечатления",
     "about": "О нас",
-    "loginRegister": "Войти / Регистрация"
+    "loginRegister": "Войти / Регистрация",
+    "business": "Для бизнеса"
   },
 
   "hero": {
@@ -89,6 +109,7 @@
   },
 
   "search": {
+    "noCities": "Городов нет",
     "destination": "Направление",
     "destinationPlaceholder": "Куда вы едете?",
     "checkIn": "Заезд",
@@ -112,12 +133,37 @@
   },
 
   "cities": {
+    "title": "Города Азербайджана",
     "popularDescription": "Откройте для себя самые посещаемые города Азербайджана",
+    "searchPlaceholder": "Поиск городов",
+    "resultCount": "Городов: {{count}}",
+    "noSearchResults": "По вашему запросу города не найдены",
     "emptyTitle": "Города не найдены",
     "emptyDescription": "В данный момент нет городов для отображения.",
     "loadError": "Не удалось загрузить города.",
     "azerbaijan": "Азербайджан",
     "hotelCount": "{{count}} отелей"
+  },
+
+  "citiesName": {
+    "Baku": "Баку",
+    "Gabala": "Габала",
+    "Sheki": "Шеки",
+    "Quba": "Губа",
+    "Qusar": "Гусар",
+    "Ganja": "Гянджа",
+    "Shamakhi": "Шемаха",
+    "Ismayilli": "Исмаиллы",
+    "Lankaran": "Ленкорань",
+    "Shusha": "Шуша",
+    "Nakhchivan": "Нахчыван",
+    "Goygol": "Гёйгёль",
+    "Zagatala": "Закатала",
+    "Gakh": "Гах",
+    "Lerik": "Лерик",
+    "Naftalan": "Нафталан",
+    "Shamkir": "Шамкир",
+    "Mingachevir": "Мингечевир"
   },
 
   "ads": {
@@ -149,5 +195,35 @@
     "terms": "Условия использования",
     "privacy": "Политика конфиденциальности",
     "rights": "Все права защищены."
+  },
+
+  "admin": {
+    "workspace": "Панель администратора",
+    "navigation": "Навигация администратора",
+    "metricsLabel": "Основные показатели",
+    "recentReservations": "Последние бронирования",
+    "latestActivity": "Последняя активность",
+    "emptyTitle": "Пока нет данных",
+    "serverError": "Произошла ошибка сервера. Повторите попытку позже.",
+    "sections": {
+      "overview": "Обзор",
+      "reservations": "Бронирования",
+      "hotels": "Отели",
+      "cities": "Города",
+      "customers": "Пользователи",
+      "reviews": "Отзывы"
+    },
+    "metrics": {
+      "reservations": "Бронирования",
+      "revenue": "Общий доход",
+      "hotels": "Отели",
+      "customers": "Пользователи"
+    },
+    "columns": {
+      "reservation": "Бронирование",
+      "guest": "Гость",
+      "property": "Отель",
+      "amount": "Сумма"
+    }
   }
 }

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
+  Autocomplete,
   Box,
   Button,
   Divider,
@@ -13,10 +14,35 @@ import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
+import { getCities } from "../../features/cities/api/citiesApi";
 import { useTranslation } from "react-i18next";
 
 export default function HeroSearchBar() {
   const { t } = useTranslation();
+
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadCities = async () => {
+      try {
+        const result = await getCities({ page: 1, pageSize: 20 });
+
+        if (isMounted) {
+          setCities(Array.isArray(result?.items) ? result.items : []);
+        }
+      } catch (error) {
+        console.error("Failed to load cities:", error);
+      }
+    };
+
+    loadCities();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const [search, setSearch] = useState({
     destination: "",
@@ -24,11 +50,27 @@ export default function HeroSearchBar() {
     checkOut: "",
     guests: 1,
   });
+  const today = toDateInputValue(new Date());
+  const minCheckOut = search.checkIn
+    ? addDaysToDateInputValue(search.checkIn, 1)
+    : addDaysToDateInputValue(today, 1);
 
   const [error, setError] = useState("");
+  const [cityMenuOpen, setCityMenuOpen] = useState(false);
+  const destinationQuery = search.destination.trim().toLocaleLowerCase();
+  const selectedCity = cities.find(
+    (city) =>
+      t(`citiesName.${city.cityName}`, { defaultValue: city.cityName }) ===
+      search.destination
+  ) ?? null;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
+    if (name === "checkIn") {
+      setSearch((prev) => ({ ...prev, checkIn: value, checkOut: "" }));
+      return;
+    }
 
     setSearch((prev) => ({
       ...prev,
@@ -56,7 +98,7 @@ export default function HeroSearchBar() {
       return;
     }
 
-    if (new Date(search.checkOut) <= new Date(search.checkIn)) {
+    if (search.checkOut < minCheckOut) {
       setError(t("searchRequired.invalidDateRange"));
       return;
     }
@@ -103,17 +145,97 @@ export default function HeroSearchBar() {
           icon={<LocationOnOutlinedIcon />}
           label={t("search.destination")}
         >
-          <TextField
-            name="destination"
-            value={search.destination}
-            onChange={handleChange}
-            placeholder={t("search.destinationPlaceholder")}
-            variant="standard"
-            fullWidth
-            InputProps={{
-              disableUnderline: true,
+          <Autocomplete
+            freeSolo
+            options={cities}
+            value={selectedCity}
+            inputValue={search.destination}
+            open={cityMenuOpen && Boolean(destinationQuery)}
+            onOpen={() => setCityMenuOpen(true)}
+            onClose={() => setCityMenuOpen(false)}
+            onInputChange={(_, value, reason) => {
+              setSearch((prev) => ({ ...prev, destination: value }));
+              if (reason === "input") {
+                setCityMenuOpen(Boolean(value.trim()));
+              }
             }}
-            sx={inputStyle}
+            onChange={(_, city) => {
+              const cityName =
+                typeof city === "string"
+                  ? city
+                  : city
+                    ? t(`citiesName.${city.cityName}`, {
+                        defaultValue: city.cityName,
+                      })
+                    : "";
+
+              setSearch((prev) => ({ ...prev, destination: cityName }));
+              setError("");
+              setCityMenuOpen(false);
+            }}
+            getOptionLabel={(city) =>
+              typeof city === "string"
+                ? city
+                : t(`citiesName.${city.cityName}`, {
+                    defaultValue: city.cityName,
+                  })
+            }
+            filterOptions={(options, { inputValue }) => {
+              const query = inputValue.trim().toLocaleLowerCase();
+
+              return options.filter((city) => {
+                const localizedName = t(`citiesName.${city.cityName}`, {
+                  defaultValue: city.cityName,
+                });
+
+                return `${city.cityName} ${localizedName}`
+                  .toLocaleLowerCase()
+                  .includes(query);
+              });
+            }}
+            noOptionsText={t("search.noCities")}
+            renderOption={(props, city) => (
+              <Box component="li" {...props} key={city.cityId}>
+                <LocationOnOutlinedIcon
+                  sx={{ mr: 1, color: "secondary.dark", fontSize: 18 }}
+                />
+                {t(`citiesName.${city.cityName}`, {
+                  defaultValue: city.cityName,
+                })}
+              </Box>
+            )}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                name="destination"
+                placeholder={t("search.destinationPlaceholder")}
+                variant="standard"
+                fullWidth
+                InputProps={{
+                  ...params.InputProps,
+                  disableUnderline: true,
+                }}
+                sx={inputStyle}
+              />
+            )}
+            slotProps={{
+              paper: {
+                sx: {
+                  mt: 0.75,
+                  border: "1px solid",
+                  borderColor: "divider",
+                  boxShadow: "0 12px 28px rgba(16,43,54,.18)",
+                },
+              },
+              listbox: {
+                sx: { maxHeight: 240, py: 0.5 },
+              },
+            }}
+            sx={{
+              width: "100%",
+              "& .MuiAutocomplete-inputRoot": { p: 0 },
+              "& .MuiAutocomplete-endAdornment": { right: 0 },
+            }}
           />
         </SearchField>
 
@@ -132,8 +254,8 @@ export default function HeroSearchBar() {
             InputProps={{
               disableUnderline: true,
             }}
-            inputProps={{
-              min: new Date().toISOString().split("T")[0],
+            slotProps={{
+              htmlInput: { min: today },
             }}
             sx={inputStyle}
           />
@@ -155,8 +277,8 @@ export default function HeroSearchBar() {
             InputProps={{
               disableUnderline: true,
             }}
-            inputProps={{
-              min: search.checkIn || new Date().toISOString().split("T")[0],
+            slotProps={{
+              htmlInput: { min: minCheckOut },
             }}
             sx={inputStyle}
           />
@@ -243,7 +365,6 @@ export default function HeroSearchBar() {
       </Box>
       <Box
         sx={{
-          minHeight: 28,
           mt: 0.7,
           px: 1,
         }}
@@ -262,6 +383,21 @@ export default function HeroSearchBar() {
       </Box>
     </Box>
   );
+}
+
+function toDateInputValue(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function addDaysToDateInputValue(value, days) {
+  const date = new Date(`${value}T00:00:00`);
+  date.setDate(date.getDate() + days);
+
+  return toDateInputValue(date);
 }
 
 /* ==========================================

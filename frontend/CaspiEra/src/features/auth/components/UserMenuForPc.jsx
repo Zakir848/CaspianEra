@@ -13,7 +13,7 @@ import {
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
-export default function UserMenu({ user, onLogout }) {
+export default function UserMenuForPc({ user, onLogout }) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);

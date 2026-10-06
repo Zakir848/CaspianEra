@@ -11,6 +11,8 @@
     "title": "Welcome back",
     "subtitle": "Sign in to your CaspianEra account",
     "button": "Sign in",
+    "requiredFields": "Email and password are required.",
+    "passwordNotice": "Strong password rules are checked only when creating a new account.",
     "noAccount": "Don't have an account?",
     "signUp": "Sign up",
     "rememberMe": "Remember me",
@@ -22,7 +24,22 @@
     "subtitle": "Start planning your journey with CaspianEra",
     "button": "Create account",
     "hasAccount": "Already have an account?",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "requiredPasswords": "Password and confirmation are required.",
+    "passwordMismatch": "Passwords do not match.",
+    "passwordMinLength": "Password must be at least 8 characters.",
+    "passwordRequirements": "Password must include uppercase and lowercase letters, a number, and a special character.",
+    "passwordMaxLength": "Password can be at most 20 characters.",
+    "passwordChecklist": "Password requirements",
+    "passwordProgress": "{{completed}}/{{total}} complete",
+    "passwordRules": {
+      "uppercase": "Uppercase letter",
+      "lowercase": "Lowercase letter",
+      "number": "Number",
+      "special": "Special character",
+      "minLength": "At least 8 characters",
+      "maxLength": "20 characters maximum"
+    }
   },
 
   "common": {
@@ -53,9 +70,12 @@
     "home": "Home",
     "hotels": "Hotels",
     "cities": "Cities",
+    "wishlist": "Wishlist",
+    "logout": "Log out",
     "experiences": "Experiences",
     "about": "About us",
-    "loginRegister": "Login / Register"
+    "loginRegister": "Login / Register",
+    "business": "For Business"
   },
 
   "hero": {
@@ -89,6 +109,7 @@
   },
 
   "search": {
+    "noCities": "No cities",
     "destination": "Destination",
     "destinationPlaceholder": "Where are you going?",
     "checkIn": "Check-in",
@@ -112,12 +133,37 @@
   },
 
   "cities": {
+    "title": "Cities of Azerbaijan",
     "popularDescription": "Discover the most visited cities in Azerbaijan",
+    "searchPlaceholder": "Search cities",
+    "resultCount": "{{count}} cities",
+    "noSearchResults": "No cities match your search",
     "emptyTitle": "No cities found",
     "emptyDescription": "There are currently no cities to display.",
     "loadError": "Unable to load cities.",
     "azerbaijan": "Azerbaijan",
     "hotelCount": "{{count}} hotels"
+  },
+
+  "citiesName": {
+    "Baku": "Baku",
+    "Gabala": "Gabala",
+    "Sheki": "Sheki",
+    "Quba": "Guba",
+    "Qusar": "Gusar",
+    "Ganja": "Ganja",
+    "Shamakhi": "Shamakhi",
+    "Ismayilli": "Ismayilli",
+    "Lankaran": "Lankaran",
+    "Shusha": "Shusha",
+    "Nakhchivan": "Nakhchivan",
+    "Goygol": "Goygol",
+    "Zagatala": "Zagatala",
+    "Gakh": "Gakh",
+    "Lerik": "Lerik",
+    "Naftalan": "Naftalan",
+    "Shamkir": "Shamkir",
+    "Mingachevir": "Mingachevir"
   },
 
   "ads": {
@@ -149,5 +195,35 @@
     "terms": "Terms of use",
     "privacy": "Privacy policy",
     "rights": "All rights reserved."
+  },
+
+  "admin": {
+    "workspace": "Admin workspace",
+    "navigation": "Admin navigation",
+    "metricsLabel": "Key metrics",
+    "recentReservations": "Recent reservations",
+    "latestActivity": "Latest activity",
+    "emptyTitle": "No data yet",
+    "serverError": "A server error occurred. Please try again shortly.",
+    "sections": {
+      "overview": "Overview",
+      "reservations": "Reservations",
+      "hotels": "Hotels",
+      "cities": "Cities",
+      "customers": "Customers",
+      "reviews": "Reviews"
+    },
+    "metrics": {
+      "reservations": "Reservations",
+      "revenue": "Total revenue",
+      "hotels": "Hotels",
+      "customers": "Customers"
+    },
+    "columns": {
+      "reservation": "Reservation",
+      "guest": "Guest",
+      "property": "Hotel",
+      "amount": "Amount"
+    }
   }
 }
