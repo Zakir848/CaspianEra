@@ -12,4 +12,5 @@ public class HotelDto
     public string? Location { get; set; }
     public string? HotelName { get; set; }
     public int Rating { get; set; }
+    public int StarCount { get; set; }
 }

@@ -72,7 +72,12 @@
     "edit": "Redaktə et",
     "viewAll": "Hamısına bax",
     "perNight": "gecəlik",
-    "back": "Geri qayıt"
+    "back": "Geri qayıt",
+    "pages": "Səhifələr",
+    "pageOf": "Səhifə {{page}} / {{total}}",
+    "pageNumber": "{{page}}-ci səhifə",
+    "previousPage": "Əvvəlki səhifə",
+    "nextPage": "Növbəti səhifə"
   },
 
   "notFound": {

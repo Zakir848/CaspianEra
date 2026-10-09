@@ -14,9 +14,8 @@ export default function HeroSection() {
         position: "relative",
         minWidth: 0,
         minHeight: {
-          xs: 650,
-          md: 600,
-          lg: 800,
+          md: 500,
+          lg: 600,
         },
         display: "flex",
         flexDirection: "column",

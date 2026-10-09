@@ -27,7 +27,8 @@ public class GetHotelsHandle : IRequestHandler<GetHotelsQuery, PagedResult<Hotel
                 ImageUrl = h.HotelImages.OrderBy(img => img.CreatedAt).Select(img => img.ImageUrl).FirstOrDefault()!,
                 Location = h.City?.Name,
                 HotelName = h.Name,
-                Rating = h.Rating
+                StarCount = h.StarCount,
+                Rating = h.Rating,
             }).ToList(),
             Page = request.page,
             PageSize = request.pageSize,

@@ -198,21 +198,11 @@ export default function HomePage() {
           },
         }}
       >
-        <Box
-          component="img"
-          src="src/assets/SiteBody.png"
-          alt="Hero Background Shape"
-          sx={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "fill"
-          }}
-        />
+  
         <Container maxWidth="xl">
           <PopularCities />
           <HotelsList />
+          
         </Container>
       </Box>
     </Box>

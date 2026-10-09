@@ -24,7 +24,7 @@ export default function HotelCard({ hotel }) {
   const navigate = useNavigate();
 
   if (!hotel) return null;
-  
+
   const {
     id,
     hotelName,
@@ -34,7 +34,7 @@ export default function HotelCard({ hotel }) {
     price,
     imageUrl
   } = hotel;
-  
+
   console.log("HotelCard hotel:", hotel)
   console.log("HotelCard hotel:", hotelName)
 
@@ -46,7 +46,7 @@ export default function HotelCard({ hotel }) {
     <Card
       sx={{
         width: "100%",
-        maxWidth: 380,
+        maxWidth: 300,
         borderRadius: 4,
         overflow: "hidden",
         border: "1px solid #E8EDF2",
@@ -84,17 +84,20 @@ export default function HotelCard({ hotel }) {
         />
 
         {starCount > 0 && (
-          <Chip
-            label={`${starCount} ulduzlu`}
-            size="small"
+          <Rating
+            max={starCount}
+            value={starCount}
+            readOnly
             sx={{
+              backgroundColor: "rgba(42, 77, 175, 0.9)",
+              borderRadius: 1,
+              padding: "2px 6px",
+              fontSize: 25,
+              color: "#F5B301",
+              zIndex: 2,
               position: "absolute",
-              top: 16,
-              left: 16,
-              bgcolor: "rgba(255,255,255,0.95)",
-              color: "#17324D",
-              fontWeight: 700,
-              backdropFilter: "blur(8px)",
+              top: 12,
+              left: 12,
             }}
           />
         )}
@@ -164,17 +167,6 @@ export default function HotelCard({ hotel }) {
               {cityName || "Azərbaycan"}
             </Typography>
           </Box>
-
-          {starCount > 0 && (
-            <Rating
-              value={starCount}
-              readOnly
-              sx={{
-                fontSize: 19,
-                color: "#F5B301",
-              }}
-            />
-          )}
 
           <Typography
             sx={{

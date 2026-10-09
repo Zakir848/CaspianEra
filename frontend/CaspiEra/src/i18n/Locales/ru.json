@@ -72,7 +72,12 @@
     "edit": "Редактировать",
     "viewAll": "Посмотреть все",
     "perNight": "за ночь",
-    "back": "Назад"
+    "back": "Назад",
+    "pages": "Страницы",
+    "pageOf": "Страница {{page}} из {{total}}",
+    "pageNumber": "Страница {{page}}",
+    "previousPage": "Предыдущая страница",
+    "nextPage": "Следующая страница"
   },
 
   "notFound": {

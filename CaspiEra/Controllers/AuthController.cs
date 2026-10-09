@@ -171,7 +171,7 @@ namespace CaspianEra.API.Controllers
             );
 
             var confirmationUrl =
-                $"http://192.168.31.183:5173/verify-email" +
+                $"http://10.1.10.13:5173/verify-email" +
                 $"?userId={user.Id}" +
                 $"&token={encodedToken}";
 
@@ -207,7 +207,6 @@ namespace CaspianEra.API.Controllers
 
             if (!user.EmailConfirmed)
             {
-
                 return StatusCode(403, new
                 {
                     code = "EmailNotVerified",

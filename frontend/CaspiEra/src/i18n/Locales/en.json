@@ -72,7 +72,12 @@
     "edit": "Edit",
     "viewAll": "View all",
     "perNight": "per night",
-    "back": "Go back"
+    "back": "Go back",
+    "pages": "Pages",
+    "pageOf": "Page {{page}} of {{total}}",
+    "pageNumber": "Page {{page}}",
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
   },
 
   "notFound": {
