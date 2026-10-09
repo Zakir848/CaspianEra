@@ -1,6 +1,7 @@
 ﻿using CaspianEra.Application.DTOs.Cities;
 using CaspianEra.Application.DTOs.Owners;
 using CaspianEra.Application.Features.Owners.Command.CreateOwner;
+using CaspianEra.Application.Features.Owners.Query.GetOwners;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,13 @@ namespace CaspianEra.API.Controllers
         public OwnersController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetOwners(int page, int pageSize, CancellationToken cancellationToken)
+        {
+            var owners = await _mediator.Send(new GetOwnersQuery(page, pageSize), cancellationToken);
+            return Ok(owners);
         }
 
         [HttpPost]

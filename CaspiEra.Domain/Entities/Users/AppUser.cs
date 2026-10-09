@@ -1,4 +1,5 @@
-﻿using CaspiEra.Domain.Entities.Hotels;
+﻿using CaspianEra.Domain.Entities.Email;
+using CaspiEra.Domain.Entities.Hotels;
 using CaspiEra.Domain.Entities.Reservations;
 using CaspiEra.Domain.Entities.Token;
 using Microsoft.AspNetCore.Http;
@@ -32,4 +33,7 @@ public class AppUser : IdentityUser<Guid>
 
     public ICollection<RefreshToken> RefreshTokens { get; set; }
     = new List<RefreshToken>();
+
+    public ICollection<EmailVerificationCode> EmailVerificationCodes
+    { get; set; } = new List<EmailVerificationCode>();
 }

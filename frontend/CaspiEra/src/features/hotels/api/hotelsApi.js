@@ -1,13 +1,32 @@
 import api from "../../../api/axios";
 
-export const getHotels = async () => {
-  const response = await api.get("/hotels");
+export const getHotelsByCityId = async (
+  cityId,
+  { page = 1, pageSize = 12 },
+) => {
+  const response = await api.get(`/cities/${cityId}/hotels`, {
+    params: {
+      page,
+      pageSize,
+    },
+  });
 
   return response.data;
 };
 
-export const getHotelById = async (id) => {
-  const response = await api.get(`/hotels/${id}`);
+export const getHotels = async ({ page = 1, pageSize = 12 }) => {
+  const response = await api.get(`/hotels`, {
+    params: {
+      page,
+      pageSize,
+    },
+  });
+
+  return response.data;
+};
+
+export const getHotelById = async (cityId, id) => {
+  const response = await api.get(`cities/${cityId}/hotels/${id}`);
 
   return response.data;
 };
@@ -33,5 +52,5 @@ export const createHotel = async (name, description, images) => {
     },
   });
 
-  return response.data;  
+  return response.data;
 };

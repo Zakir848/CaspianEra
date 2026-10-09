@@ -152,7 +152,7 @@ namespace CaspianEra.Infratructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("No")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
@@ -173,6 +173,10 @@ namespace CaspianEra.Infratructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
+
+                    b.HasIndex("No")
+                        .IsUnique()
+                        .HasFilter("[No] IS NOT NULL");
 
                     b.HasIndex("OwnerId");
 
@@ -723,6 +727,47 @@ namespace CaspianEra.Infratructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
+            modelBuilder.Entity("CaspianEra.Domain.Entities.Email.EmailVerificationCode", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CodeHash")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FailedAttempts")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UsedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EmailVerificationCodes");
+                });
+
             modelBuilder.Entity("CaspianEra.Domain.Entities.Users.AppUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1222,6 +1267,17 @@ namespace CaspianEra.Infratructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CaspianEra.Domain.Entities.Email.EmailVerificationCode", b =>
+                {
+                    b.HasOne("CaspianEra.Domain.Entities.Users.AppUser", "User")
+                        .WithMany("EmailVerificationCodes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -1323,6 +1379,8 @@ namespace CaspianEra.Infratructure.Migrations
 
             modelBuilder.Entity("CaspianEra.Domain.Entities.Users.AppUser", b =>
                 {
+                    b.Navigation("EmailVerificationCodes");
+
                     b.Navigation("OwnerHotel");
 
                     b.Navigation("RefreshTokens");

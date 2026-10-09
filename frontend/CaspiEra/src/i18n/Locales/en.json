@@ -42,6 +42,24 @@
     }
   },
 
+  "confirmEmail": {
+    "brandTitle": "Verify your email",
+    "brandDescription": "Your secure CaspianEra account is the beginning of new journeys.",
+    "footer": "DISCOVER YOUR JOURNEY",
+    "back": "Back to sign up",
+    "title": "Check your email",
+    "description": "Enter the 6-digit verification code sent to your email address.",
+    "emailFallback": "The email address used to sign up",
+    "codeFormLabel": "6-digit verification code",
+    "codeLabel": "Verification code",
+    "digitLabel": "Digit {{number}}",
+    "codeHint": "Paste the full code or enter each digit in its own box.",
+    "submit": "Verify email",
+    "verificationUnavailable": "Code verification is not connected to the server yet.",
+    "resendCode": "Resend code",
+    "resendUnavailable": "Resending the code is not connected to the server yet."
+  },
+
   "common": {
     "search": "Search",
     "loading": "Loading...",
@@ -195,6 +213,47 @@
     "terms": "Terms of use",
     "privacy": "Privacy policy",
     "rights": "All rights reserved."
+  },
+
+  "profile": {
+    "label": "Profile",
+    "title": "Account information",
+    "home": "Home",
+    "member": "Member",
+    "activeUser": "Active user",
+    "edit": "Edit profile",
+    "personalInfo": "Personal information",
+    "info": {
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "createdAt": "Registration date"
+    },
+    "preferences": {
+      "title": "Selected preferences",
+      "family": "Family trip",
+      "baku": "Baku",
+      "fiveStar": "5-star hotel",
+      "airportTransfer": "Airport transfer"
+    },
+    "stats": {
+      "reservations": "Reservations",
+      "hotels": "Hotels",
+      "reviews": "Reviews"
+    },
+    "status": {
+      "title": "Account status",
+      "description": "Your account is active and ready to conveniently view reservations, hotels, and services."
+    },
+    "reservations": {
+      "title": "Reservations",
+      "hotel": "Hotel",
+      "pending": "Pending",
+      "guests": "guests"
+    },
+    "hotels": {
+      "title": "Booked hotels"
+    }
   },
 
   "admin": {

@@ -23,6 +23,11 @@ public class CreateHotelHandle : IRequestHandler<CreateHotelCommand, HotelDto>
     public async Task<HotelDto> Handle(CreateHotelCommand request, CancellationToken cancellationToken)
     {
         var hotel = _mapper.Map<Hotel>(request.dto);
+        
+        hotel.CityId = request.CityId;
+
+        hotel.No = $"HTL-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
+        hotel.City.Name = request.dto.Name;
 
         if (request.dto.Images is not null)
         {

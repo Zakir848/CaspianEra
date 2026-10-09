@@ -310,13 +310,13 @@ export default function LoginPage() {
 
           <Box
             component="form"
+            onSubmit={handleSubmit}
             sx={{
               display: "flex",
               flexDirection: "column",
               gap: 2.2,
             }}
             noValidate
-            onSubmit={handleSubmit}
           >
             <TextField
               fullWidth

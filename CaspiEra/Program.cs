@@ -2,6 +2,7 @@ using CaspianEra.API.Helper;
 using CaspianEra.Application.Auth.Interface;
 using CaspianEra.Application.Features.Hotels.Command.CreateHotel;
 using CaspianEra.Application.Interfaces.Repositories;
+using CaspianEra.Application.Interfaces.Service;
 using CaspianEra.Application.Interfaces.Services;
 using CaspianEra.Application.Mappings;
 using CaspianEra.Domain.Entities.Users;
@@ -17,11 +18,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
-using System.Linq;
-using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +36,7 @@ builder.Services.AddControllers()
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-        
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(
@@ -59,14 +60,21 @@ builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddScoped<IRoomTypeRepository, RoomTypeRepository>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddSingleton<IOtpService, OtpService>();
 
 builder.Services.AddScoped<IFileStorageService, CloudinaryStorageService>();
 
 //builder.Services.AddScoped<INotificationService, NotificationService>();
 
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings")
+);
+
 builder.Services.Configure<CloudinarySetting>(
     builder.Configuration.GetSection("CloudinarySettings")
 );
+
 
 builder.Services.AddSingleton<Cloudinary>(sp =>
 {

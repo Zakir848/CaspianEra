@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Box,
@@ -15,6 +16,7 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 export default function UserMenuForPc({ user, onLogout }) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
   const open = Boolean(anchorEl);
 
@@ -124,7 +126,12 @@ export default function UserMenuForPc({ user, onLogout }) {
         <Divider />
 
         {/* PROFILE */}
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            navigate(user?.role === "AppAdmin" ? "/AppAdmin" : "/profile");
+          }}
+        >
           <ListItemIcon>
             <PersonOutlineRoundedIcon fontSize="small" />
           </ListItemIcon>

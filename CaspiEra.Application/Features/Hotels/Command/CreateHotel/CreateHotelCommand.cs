@@ -8,4 +8,4 @@ using System.Threading.Tasks;
 
 namespace CaspianEra.Application.Features.Hotels.Command.CreateHotel;
 
-public record CreateHotelCommand(CreateHotelDto dto) : IRequest<HotelDto>;
+public record CreateHotelCommand(Guid CityId, CreateHotelDto dto) : IRequest<HotelDto>;

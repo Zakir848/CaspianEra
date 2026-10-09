@@ -47,7 +47,7 @@ namespace CaspianEra.API.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        //[Authorize(Roles ="AppAdmin")]
+        [Authorize(Roles ="AppAdmin")]
         public async Task<IActionResult> Create([FromForm] CreateCityDto dto, CancellationToken cancellationToken)
         {
             var city = await _mediator.Send(new CreateCityCommand(dto), cancellationToken);

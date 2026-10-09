@@ -13,7 +13,6 @@ import {
   CheckCircleRounded,
   EmailOutlined,
   LockOutlined,
-  Person2Outlined,
   RadioButtonUncheckedRounded,
   Visibility,
   VisibilityOff,
@@ -22,14 +21,12 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "../components/navigation/LanguageSelector";
-import { useAuthStore } from "../features/auth/store/useAuthStore";
 import { register } from "../features/auth/api/authApi";
 
 export default function RegisterPage() {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
-  const setAuth = useAuthStore((state) => state.setAuth);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -120,19 +117,9 @@ export default function RegisterPage() {
 
     try {
       const result = await register(form);
-
-      setAuth({
-        accessToken: result.accessToken,
-        refreshToken: result.refreshToken,
-        user: {
-          userId: result.userId,
-          email: result.email,
-          firstName: result.firstName,
-          lastName: result.lastName,
-          role: result.role,
-        },
+      navigate("/verify-email", {
+        state: { email: result.email || form.email.trim() },
       });
-      navigate("/");
     } catch (err) {
       const data = err.response?.data;
 

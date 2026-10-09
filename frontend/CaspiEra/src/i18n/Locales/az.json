@@ -42,6 +42,24 @@
     }
   },
 
+  "confirmEmail": {
+    "brandTitle": "E-poçtunuzu təsdiqləyin",
+    "brandDescription": "Təhlükəsiz hesabınız CaspianEra ilə yeni səyahətlərin başlanğıcıdır.",
+    "footer": "SƏYAHƏTİNİZİ KƏŞF EDİN",
+    "back": "Qeydiyyata qayıt",
+    "title": "E-poçtunuzu yoxlayın",
+    "description": "E-poçt ünvanınıza göndərilən 6 rəqəmli təsdiq kodunu daxil edin.",
+    "emailFallback": "Qeydiyyatda istifadə etdiyiniz e-poçt ünvanı",
+    "codeFormLabel": "6 rəqəmli təsdiq kodu",
+    "codeLabel": "Təsdiq kodu",
+    "digitLabel": "Rəqəm {{number}}",
+    "codeHint": "Kodu yapışdıra və ya rəqəmləri ayrı-ayrı xanalara daxil edə bilərsiniz.",
+    "submit": "E-poçtu təsdiqlə",
+    "verificationUnavailable": "Kodun yoxlanması hələ serverə qoşulmayıb.",
+    "resendCode": "Kodu yenidən göndər",
+    "resendUnavailable": "Kodu yenidən göndərmək hələ serverə qoşulmayıb."
+  },
+
   "common": {
     "search": "Axtar",
     "loading": "Yüklənir...",
@@ -197,6 +215,46 @@
     "rights": "Bütün hüquqlar qorunur."
   },
 
+  "profile": {
+    "label": "Profil",
+    "title": "Hesab məlumatları",
+    "home": "Ana səhifə",
+    "member": "Üzv",
+    "activeUser": "Aktiv istifadəçi",
+    "edit": "Profili redaktə et",
+    "personalInfo": "Şəxsi məlumatlar",
+    "info": {
+      "email": "E-poçt",
+      "phone": "Telefon",
+      "address": "Ünvan",
+      "createdAt": "Qeydiyyat tarixi"
+    },
+    "preferences": {
+      "title": "Seçilmiş seçimlər",
+      "family": "Ailə səyahəti",
+      "baku": "Bakı",
+      "fiveStar": "5 ulduzlu otel",
+      "airportTransfer": "Hava limanı transferi"
+    },
+    "stats": {
+      "reservations": "Rezervasiyalar",
+      "hotels": "Otellər",
+      "reviews": "Rəylər"
+    },
+    "status": {
+      "title": "Hesab statusu",
+      "description": "Hesabınız aktivdir və rezervasiya, otel və xidmətlərə rahat baxmaq üçün hazırdır."
+    },
+    "reservations": {
+      "title": "Rezervasiyalar",
+      "hotel": "Otel",
+      "pending": "Gözlənilir",
+      "guests": "qonaq"
+    },
+    "hotels": {
+      "title": "Rezervasiya edilmiş otellər"
+    }
+  },
   "admin": {
     "workspace": "İdarəetmə paneli",
     "navigation": "Admin naviqasiyası",

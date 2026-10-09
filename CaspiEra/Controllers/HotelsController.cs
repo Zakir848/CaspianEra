@@ -4,6 +4,7 @@ using CaspianEra.Application.Features.Hotels.Command.CreateHotel;
 using CaspianEra.Application.Features.Hotels.Query.GetHotelById;
 using CaspianEra.Application.Features.Hotels.Query.GetHotels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CaspiEra.UI.Controllers
@@ -20,15 +21,25 @@ namespace CaspiEra.UI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll(Guid cityId, CancellationToken cancellationToken)
+        public async Task<ActionResult> GetAllByCityId(int page, int pageSize, [FromRoute] Guid cityId, CancellationToken cancellationToken)
         {
-            var hotels = await _mediator.Send(new GetHotelsQuery(cityId), cancellationToken);
+            var hotels = await _mediator.Send(new GetHotelsByCityIdQuery(cityId, page, pageSize), cancellationToken);
+
+            return Ok(hotels);
+        }
+
+
+        [HttpGet]
+        [Route("/api/Hotels")]
+        public async Task<ActionResult> GetAll(int page, int pageSize, CancellationToken cancellationToken)
+        {
+            var hotels = await _mediator.Send(new GetHotelsQuery(page, pageSize), cancellationToken);
 
             return Ok(hotels);
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult> GetById(Guid id,CancellationToken cancellationToken)
+        public async Task<ActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
             var hotel = await _mediator.Send(new GetHotelByIdQuery(id), cancellationToken);
 
@@ -41,9 +52,11 @@ namespace CaspiEra.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateHotelDto dto, CancellationToken cancellationToken)
+        [Consumes("multipart/form-data")]
+        //[Authorize(Roles = "AppAdmin,HotelOwner")]
+        public async Task<IActionResult> Create([FromRoute] Guid cityId, [FromForm] CreateHotelDto dto, CancellationToken cancellationToken)
         {
-            var hotel = await _mediator.Send(new CreateHotelCommand(dto), cancellationToken);
+            var hotel = await _mediator.Send(new CreateHotelCommand(cityId, dto), cancellationToken);
 
             return Ok(hotel);
         }

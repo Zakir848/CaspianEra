@@ -20,6 +20,9 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
             .HasForeignKey(h => h.CityId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.HasIndex(h => h.No)
+            .IsUnique();
+
         builder.Property(h => h.Name)
             .IsRequired()
             .HasMaxLength(200);

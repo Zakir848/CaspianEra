@@ -5,8 +5,8 @@ export default function useCities({ page = 1, pageSize = 20 } = {}) {
   return useQuery({
     queryKey: ["cities", page, pageSize],
 
-    queryFn: () =>
-      getCities({
+    queryFn: async () =>
+      await getCities({
         page,
         pageSize,
       }),

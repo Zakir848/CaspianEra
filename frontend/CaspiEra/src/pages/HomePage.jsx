@@ -8,12 +8,12 @@ import LeftAdBanner from "../components/home/LeftAdBanner";
 import RightAdBanner from "../components/home/RightAdBanner";
 
 import PopularCities from "../features/cities/components/PopularCities";
+import HotelsList from "../features/hotels/components/HotelsList";
 
 // import hero1 from "../assets/baku-hero-light.png";
 import hero1 from "../assets/baku-hero.png";
 
 export default function HomePage() {
-
   return (
     <Box
       sx={{
@@ -198,8 +198,21 @@ export default function HomePage() {
           },
         }}
       >
+        <Box
+          component="img"
+          src="src/assets/SiteBody.png"
+          alt="Hero Background Shape"
+          sx={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "fill"
+          }}
+        />
         <Container maxWidth="xl">
           <PopularCities />
+          <HotelsList />
         </Container>
       </Box>
     </Box>

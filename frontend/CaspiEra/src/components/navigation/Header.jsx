@@ -26,14 +26,14 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import CaspianEraLogo from "../../assets/CaspianEra_Logo.png";
 
 import LanguageSelector from "./LanguageSelector";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../features/auth/store/useAuthStore";
 import { logout as logoutRequest } from "../../features/auth/api/authApi";
 import UserMenuForPc from "../../features/auth/components/UserMenuForPc";
 
 export default function Header() {
   const { t } = useTranslation();
-
+  const location = useLocation();
   const { user, refreshToken, logout: clearAuth } = useAuthStore();
   console.log(user);
 
@@ -58,26 +58,32 @@ export default function Header() {
     {
       key: "home",
       label: t("navbar.home"),
+      navigate: "/",
     },
     {
       key: "hotels",
       label: t("navbar.hotels"),
+      navigate: "/hotels",
     },
     {
       key: "cities",
       label: t("navbar.cities"),
+      navigate: "/cities",
     },
     {
       key: "experiences",
       label: t("navbar.experiences"),
+      navigate: "/experiences",
     },
     {
       key: "about",
       label: t("navbar.about"),
+      navigate: "/about",
     },
     {
       key: "business",
       label: t("navbar.business"),
+      navigate: "/business",
     },
   ];
 
@@ -239,61 +245,62 @@ export default function Header() {
                 },
               }}
             >
-              {navItems.map((item, index) => (
-                <Button
-                  key={item.key}
-                  sx={{
-                    position: "relative",
+              {navItems.map((item) => {
+                const isActive =
+                  item.navigate === "/"
+                    ? location.pathname === "/"
+                    : location.pathname.startsWith(item.navigate);
 
-                    px: {
-                      lg: 1.3,
-                      xl: 1.7,
-                    },
+                return (
+                  <Button
+                  
+                    key={item.key}
+                    onClick={() => navigate(item.navigate)}
+                    sx={{
+                      position: "relative",
 
-                    py: 1,
+                      px: {
+                        lg: 1.3,
+                        xl: 1.7,
+                      },
 
-                    color: index === 0 ? "#FFFFFF" : "rgba(255,255,255,.82)",
+                      py: 1,
 
-                    fontSize: {
-                      lg: 12,
-                      xl: 13,
-                    },
+                      color: isActive ? "#FFFFFF" : "rgba(255,255,255,.82)",
 
-                    fontWeight: index === 0 ? 700 : 500,
+                      fontSize: {
+                        lg: 12,
+                        xl: 13,
+                      },
 
-                    textTransform: "none",
+                      fontWeight: isActive ? 700 : 500,
 
-                    borderRadius: 0,
+                      textTransform: "none",
+                      borderRadius: 0,
 
-                    "&::after":
-                      index === 0
+                      "&::after": isActive
                         ? {
                             content: '""',
-
                             position: "absolute",
-
                             left: 14,
                             right: 14,
                             bottom: 1,
-
                             height: 2,
-
                             bgcolor: "#D8AC54",
-
                             borderRadius: "10px",
                           }
                         : {},
 
-                    "&:hover": {
-                      color: "#FFFFFF",
-
-                      bgcolor: "rgba(255,255,255,.06)",
-                    },
-                  }}
-                >
-                  {item.label}
-                </Button>
-              ))}
+                      "&:hover": {
+                        color: "#FFFFFF",
+                        bgcolor: "rgba(255,255,255,.06)",
+                      },
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                );
+              })}
             </Box>
 
             {/* =================================
@@ -672,7 +679,9 @@ export default function Header() {
           {navItems.map((item) => (
             <ListItemButton
               key={item.key}
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                return (setMobileMenuOpen(false), navigate(item.navigate));
+              }}
               sx={{
                 py: 1.3,
                 px: 2,

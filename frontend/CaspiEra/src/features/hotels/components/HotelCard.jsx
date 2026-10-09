@@ -24,20 +24,23 @@ export default function HotelCard({ hotel }) {
   const navigate = useNavigate();
 
   if (!hotel) return null;
-
+  
   const {
     id,
-    name,
+    hotelName,
     description,
     cityName,
     starCount,
     price,
-    hotelImages,
+    imageUrl
   } = hotel;
+  
+  console.log("HotelCard hotel:", hotel)
+  console.log("HotelCard hotel:", hotelName)
 
-  const imageUrl =
-    hotelImages?.[0]?.imageUrl ||
-    "https://placehold.co/800x500?text=CaspianEra";
+  const imagesUrl =
+    imageUrl ||
+    "";
 
   return (
     <Card
@@ -70,8 +73,8 @@ export default function HotelCard({ hotel }) {
         <CardMedia
           className="hotel-image"
           component="img"
-          image={imageUrl}
-          alt={name}
+          image={imagesUrl}
+          alt={hotelName}
           sx={{
             width: "100%",
             height: "100%",
@@ -136,7 +139,7 @@ export default function HotelCard({ hotel }) {
               lineHeight: 1.3,
             }}
           >
-            {name}
+            {hotelName}
           </Typography>
 
           <Box

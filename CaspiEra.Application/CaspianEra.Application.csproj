@@ -9,7 +9,7 @@
   <ItemGroup>
     <Folder Include="DTOs\Refund\" />
     <Folder Include="DTOs\Payments\" />
-    <Folder Include="Features\Owners\Query\" />
+    <Folder Include="Features\Owners\Query\GetOwnerById\" />
     <Folder Include="Features\Payments\Command\" />
     <Folder Include="Features\Payments\Query\" />
     <Folder Include="Features\Refound\Command\" />

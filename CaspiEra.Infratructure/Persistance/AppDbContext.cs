@@ -1,4 +1,5 @@
-﻿using CaspianEra.Domain.Entities.Users;
+﻿using CaspianEra.Domain.Entities.Email;
+using CaspianEra.Domain.Entities.Users;
 using CaspiEra.Domain.Entities;
 using CaspiEra.Domain.Entities.Amenities;
 using CaspiEra.Domain.Entities.Hotels;
@@ -44,6 +45,7 @@ public class AppDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     public DbSet<Refund> Refunds => Set<Refund>();
 
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<EmailVerificationCode> EmailVerificationCodes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

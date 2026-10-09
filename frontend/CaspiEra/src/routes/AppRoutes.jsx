@@ -1,18 +1,21 @@
 import HomePage from "../pages/HomePage";
 import ProtectedRoute from "../features/auth/components/ProtectedRoute";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import NotFoundPage from "../pages/404NotFoundPage";
 import MainLayout from "../layouts/MainLayout";
 import CitiesPage from "../pages/CitiesPage";
 import AdminPage from "../pages/AdminPage";
+import UserDetailPage from "../pages/UserDetailPage";
+import VerifyEmailPage from "../pages/VerifyEmailPage";
 
 export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/verify-email" element={<VerifyEmailPage />} />
       <Route
         path="/AppAdmin"
         element={
@@ -24,6 +27,14 @@ export default function AppRoutes() {
 
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <UserDetailPage />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="/cities" element={<CitiesPage />}>
           <Route path="/cities/:id" />
